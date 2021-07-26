@@ -33,33 +33,33 @@ MASSA_Algorithm -i <input_file>.sdf -o <output_file>.sdf
 ```
 
 A list of optional arguments include:
-* Percentage of molecules in training set: ```-p``` or ```--percentage_of_training```.
+* **Percentage of molecules in training set**: ```-p``` or ```--percentage_of_training```.
     * Percentage of molecules in training set. Must be a number from 0 to 1.
     * Default = 0.8.
-* Number of biological activities for separation: ```-b``` or ```--number_of_biological```.
+* **Number of biological activities for separation**: ```-b``` or ```--number_of_biological```.
     * Number of biological activities that will be used to separate the set into training and test.
     * Default = 1.
-* Name of biological activities for separation: ```-s``` or ```--the_biological_activities```.
+* **Name of biological activities for separation**: ```-s``` or ```--the_biological_activities```.
     * Enter a list with the names of biological activities separated by commas and no spaces.
     * Example: ```MASSA_Algorithm -i <input_file>.sdf -o <output_file>.sdf -s pIC50,pMIC```.
     * Default = If not entered directly on the command line, it will be requested during algorithm execution.
-* Number of principal components in PCA: ```-n``` or ```--number_of_PCs```.
+* **Number of principal components in PCA**: ```-n``` or ```--number_of_PCs```.
     * Defines the number of principal components to reduce the dimensionality of variables related to biological, physicochemical and structural domains. If the value is a decimal between 0 and 1, the number of principal components is what justifies for (<input number> * 100)% of the variance. If the value is greater than 1, the number of PCs will be exactly the input integer, but PAY ATTENTION:
 
         1) If the number of PCs is an integer and equal to or greater than the number of physicochemical properties (7), the PCA step will be bypassed for this domain.
         2) The same for the biological domain.
         3) If the number of biological activities is less than 3, the PCA step will be bypassed for this domain.
     * Default = 0.85.
-* SVD solver parameter for PCA: ```-v``` or ```--svd_solver_for_PCA```.
+* **SVD solver parameter for PCA**: ```-v``` or ```--svd_solver_for_PCA```.
     * See the sklearn.decomposition.PCA topic on https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html for more info.
     * Default = auto.
-* Extension of image files: ```-t``` or ```--image_type```.
+* **Extension of image files**: ```-t``` or ```--image_type```.
     * Extension of the image files that will be generated. Suggested = png or svg.
     * Default = png.
-* Font size for X-axis of dendrograms: ```-d``` or ```--dendrogram_Xfont_size```.
+* **Font size for X-axis of dendrograms**: ```-d``` or ```--dendrogram_Xfont_size```.
     * Sets the font size on the x-axis of the dendrogram (molecule labels).
     * Default = 5.
-* Font size for X-axis of bar plots: ```-x``` or ```--barplot_Xfont_size```.
+* **Font size for X-axis of bar plots**: ```-x``` or ```--barplot_Xfont_size```.
     * Sets the font size on the x-axis of the bar plot (cluster labels).
     * Default = 12.
 
