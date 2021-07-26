@@ -63,7 +63,7 @@ A list of optional arguments include:
     * Sets the font size on the x-axis of the bar plot (cluster labels).
     * Default = 12.
 
-### Command line help
+#### Command line help
 A full description of the arguments can also be viewed directly from the command line using the command:
 ```
 MASSA_Algorithm -h
