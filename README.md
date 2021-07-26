@@ -17,16 +17,40 @@ cd MASSA_Algorithm
 python setup.py install
 ```
 ### Requirements
-* python: >= 3.7
-* rdkit (RDKit will not be installed automatically with the package. Recommended cross-platform installation via conda. For more information on how to install RDKit, see: https://www.rdkit.org/docs/Install.html)
-* numpy
-* pandas
-* matplotlib: >= 3.2
-* scipy: >= 1.6
-* scikit-learn: >= 0.24
-* kmodes:¹ >= 0.10 
+* python: >= 3.7;
+* rdkit (RDKit will not be installed automatically with the package. Recommended cross-platform installation via conda. For more information on how to install RDKit, see: https://www.rdkit.org/docs/Install.html);
+* numpy;
+* pandas;
+* matplotlib: >= 3.2;
+* scipy: >= 1.6;
+* scikit-learn: >= 0.24;
+* kmodes:¹ >= 0.10.
 
 ## Usage
+Once installed, the program can be run directly from the command line:
+```
+MASSA_Algorithm -i <input_file>.sdf -o <output_file>.sdf
+```
+
+A list of optional arguments include:
+* Percentage of molecules in training set: ```-p``` or ```--percentage_of_training```
+* Number of biological activities for separation: ```-b``` or ```--number_of_biological```
+* Name of biological activities for separation: ```-s``` or ```--the_biological_activities```
+* Number of principal components in PCA: ```-n``` or ```--number_of_PCs```
+* SVD solver parameter for PCA: ```-v``` or ```--svd_solver_for_PCA```
+* Extension of image files: ```-t``` or ```--image_type```
+* Font size for X-axis of dendrograms: ```-d``` or ```--dendrogram_Xfont_size```
+* Font size for X-axis of bar plots: ```-x``` or ```--barplot_Xfont_size```
+
+### Command line help
+A full description of the arguments can also be viewed directly from the command line using the command:
+```
+MASSA_Algorithm -h
+```
+or
+```
+MASSA_Algorithm --help
+```
 
 ## Cite
 ```
