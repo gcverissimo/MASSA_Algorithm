@@ -18,7 +18,7 @@ python setup.py install
 ```
 ### Requirements
 * python: >= 3.7
-* rdkit (Recommended cross-platform installation via conda. See: https://www.rdkit.org/docs/Install.html)
+* rdkit (RDKit will not be installed automatically with the package. Recommended cross-platform installation via conda. For more information on how to install RDKit, see: https://www.rdkit.org/docs/Install.html)
 * numpy
 * pandas
 * matplotlib: >= 3.2
@@ -39,4 +39,4 @@ python setup.py install
 ```
 
 ## References
-1: DE VOS, N. J. kmodes categorical clustering library. https://github.com/nicodv/kmodes. 2015-2021.
+[1]: DE VOS, N. J. kmodes categorical clustering library. https://github.com/nicodv/kmodes. 2015-2021.
