@@ -1,3 +1,4 @@
+# coding=UTF-8
 def initial_print():
   print('''
                         ██
