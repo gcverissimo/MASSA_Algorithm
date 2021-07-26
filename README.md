@@ -44,7 +44,7 @@ A list of optional arguments include:
     * Example: ```MASSA_Algorithm -i <input_file>.sdf -o <output_file>.sdf -s pIC50,pMIC```.
     * Default = If not entered directly on the command line, it will be requested during algorithm execution.
 * **Number of principal components in PCA**: ```-n``` or ```--number_of_PCs```.
-    * Defines the number of principal components to reduce the dimensionality of variables related to biological, physicochemical and structural domains. If the value is a decimal between 0 and 1, the number of principal components is what justifies for (<input number> * 100)% of the variance. If the value is greater than 1, the number of PCs will be exactly the input integer, but PAY ATTENTION:
+    * Defines the number of principal components to reduce the dimensionality of variables related to biological, physicochemical and structural domains. If the value is a decimal between 0 and 1, the number of principal components is what justifies for (```<input number> * 100```)% of the variance. If the value is greater than 1, the number of PCs will be exactly the input integer, but PAY ATTENTION:
 
         1) If the number of PCs is an integer and equal to or greater than the number of physicochemical properties (7), the PCA step will be bypassed for this domain.
         2) The same for the biological domain.
