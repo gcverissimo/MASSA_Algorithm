@@ -13,7 +13,7 @@ setuptools.setup(
 	author_email='gcverissimo@outlook.com',
 	url='https://github.com/gcverissimo/MASSA_Algorithm',
 	license='AGPLv3',
-	packages=setuptools.find_packages(),
+	packages= setuptools.find_packages(),
 	entry_points={'console_scripts':['MASSA_Algorithm = MASSA_Algorithm.MASSA:main']},
 	install_requires=['numpy', 'pandas', 'matplotlib >= 3.2', 'scipy >= 1.6', 'scikit-learn >= 0.24', 'kmodes >= 0.10'],
 	python_requires='>=3.7, <4',
