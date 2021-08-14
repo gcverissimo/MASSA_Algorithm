@@ -4,7 +4,7 @@ MASSA Algorithm: A tool for separating data sets of molecules into training and 
 ## Instalation
 MASSA Algorithm can be installed using pip:
 ```
-pip install MASSA_Algorithm-0.1-py3-none-any.whl
+pip install MASSA_Algorithm
 ```
 To upgrade to the latest version (recommended), also use pip:
 ```
