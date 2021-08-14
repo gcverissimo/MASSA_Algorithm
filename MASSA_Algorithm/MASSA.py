@@ -117,4 +117,3 @@ def main(): # Main subroutine, allows the program to run directly from the comma
 	MASSAmoloutput.output_mols(dataframe, FileOutput) # It adds, for each molecule, the values of the calculated properties, the identifications of each cluster and which set the molecule belongs to.
 	print('Completed')
 
-main()
