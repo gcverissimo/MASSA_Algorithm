@@ -10,7 +10,7 @@ from MASSA_Algorithm import MASSAsplit
 from MASSA_Algorithm import MASSAmoloutput
 
 def returns_zero(total, test):
-	# It evaluates if the distribution is not adequate = the iterated cluster has a percentage greater than 0.5% in the complete data set, but a percentage lower than 0.5% in the test set. This situation is unlikely to occur, as Kmodes were used precisely to avoid this.
+	# It evaluates if the distribution is not adequate = the iterated cluster has a percentage greater than 0.5% in the complete data set, but a percentage lower than 0.5% in the test set.
 	definer = False
 	for i in total.keys():
 		if (total[i] > 0.5) and (test[i] <= 0.5):
@@ -87,8 +87,8 @@ def main(): # Main subroutine, allows the program to run directly from the comma
 	ok = [bio_ok, PhCh_ok, FP_ok]
 	max_iters = 0
 		
-	# Redo the distribution in case of errors (up to 5 times):
-	while (True in ok) and (max_iters < 5):
+	# Redo the distribution in case of errors (up to 10 times):
+	while (True in ok) and (max_iters < 10):
 		## Split into training, test:
 		dataframe, test_molecules = MASSAsplit.split_train_test_sets(dataframe, training_percent, test_percent)
 
@@ -116,4 +116,3 @@ def main(): # Main subroutine, allows the program to run directly from the comma
 	## Output management:
 	MASSAmoloutput.output_mols(dataframe, FileOutput) # It adds, for each molecule, the values of the calculated properties, the identifications of each cluster and which set the molecule belongs to.
 	print('Completed')
-

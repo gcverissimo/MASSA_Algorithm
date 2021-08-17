@@ -115,21 +115,54 @@ def hca_plot(linkage, labels, leaves_cluster, CutOff, ident, directoryFileOutput
 	new_arange = np.arange(min(b)-scale/20,max(b)+new_scale,new_scale)
 	plt.yticks(new_arange)
 
-	# Assign the legend to each cluster:
-	set__leaves_cluster = sorted(list(set(leaves_cluster)))
-	set_leaves_cluster = []
-	for i in set__leaves_cluster:
-		if i < 10:
-			set_leaves_cluster.append('cluster 0'+str(i))
-		else:
-			set_leaves_cluster.append('cluster '+str(i))
-	plt.legend(set_leaves_cluster)
-
 	# Add ticks to x-axis:
 	plt.tick_params(axis='x', which='both', bottom=True, top=False, labelbottom=True)
 
-	# Get the color for each cluster:
+	# Assign the wrong legend to each cluster:
+	set__leaves_cluster = sorted(list(set(leaves_cluster)))
+	legend_value = plt.legend(set__leaves_cluster)
+
+	# Get the color for each molecule:
 	color_list = list(dendrogram['leaves_color_list'])
+	ivl_list = list(dendrogram['ivl'])
+	dictionary_of_clusters = dict(zip(labels, leaves_cluster))
+	for i in range(0,len(ivl_list)):
+		if '→ ' in ivl_list[i]:
+			ivl_list[i] = ivl_list[i].replace('→ ', '')
+	dictionary_of_colors = dict(zip(ivl_list, color_list))
+
+	# Get the right cluster colors:
+	list_cluster_color = []
+	for i in dictionary_of_clusters.keys():
+		list_cluster_color.append([i, dictionary_of_clusters[i], dictionary_of_colors[i]])
+
+	list_cluster_color = sorted(list_cluster_color, key=lambda x:x[1])
+	lcc1 = {}
+
+	for i in range(0, len(list_cluster_color)):
+		if list_cluster_color[i][2] == 'k':
+			lcc1['#000000'] = []
+			lcc1['#000000'].append(list_cluster_color[i][1])
+		else:
+			lcc1[list_cluster_color[i][2]] = []
+			lcc1[list_cluster_color[i][2]].append(list_cluster_color[i][1])
+	
+	for i in lcc1.keys():
+		lcc1[i] = list(set(lcc1[i]))[0]
+
+	right_legend = []
+	for i in range(0,len(legend_value.get_lines())):
+		right_legend.append(colrs.to_hex(legend_value.get_lines()[i].get_color()))
+	
+	# Assign the right legend to each cluster:
+	set_leaves_cluster = []
+	for i in right_legend:
+		if lcc1[i] < 10:
+			c_name = 'cluster 0' + str(lcc1[i])
+		else:
+			c_name = 'cluster ' + str(lcc1[i])
+		set_leaves_cluster.append(c_name)
+	legend_value = plt.legend(set_leaves_cluster)
 
 	# Apply cluster color to x-labels:
 	zip_label_color = list(zip(plt.gca().get_xticklabels(), color_list))
