@@ -20,7 +20,7 @@ def returns_zero(total, test):
 def main(): # Main subroutine, allows the program to run directly from the command line after installed via pip.
 	## Initializing from the command line:
 	MASSAlogos.initial_print() # Print the program logo.
-	FileInput, FileOutput, directoryFileOutput, extension_type, dendrogram_Xfont_size, barplot_Xfont_size, training_percent, test_percent, numberBioAct, BioActAsArgs, nPCS, svd_parameter = MASSAargs.capture_args() # It captures command line arguments.
+	FileInput, FileOutput, directoryFileOutput, extension_type, dendrogram_Xfont_size, barplot_Xfont_size, training_percent, test_percent, numberBioAct, BioActAsArgs, nPCS, svd_parameter, linkage_method = MASSAargs.capture_args() # It captures command line arguments.
 	print('Initializing, wait...\n')
 
 
@@ -54,9 +54,9 @@ def main(): # Main subroutine, allows the program to run directly from the comma
 
 
 	## First clustering (HCA):
-	leaves_cluster_bio, bioHCA, linkage_bio, CutOff_bio = MASSAcluster.hca_clusters(bio_PCA, names, 'bio', directoryFileOutput, extension_type) # It performs HCA clustering without generating the dendrogram for the biological domain.
-	leaves_cluster_phch, phchHCA, linkage_phch, CutOff_phch = MASSAcluster.hca_clusters(PhCh_PCA, names, 'PhCh', directoryFileOutput, extension_type) # It performs HCA clustering without generating the dendrogram for the physicochemical domain.
-	leaves_cluster_fp, fpHCA, linkage_fp, CutOff_fp = MASSAcluster.hca_clusters(FP_PCA, names, 'FP', directoryFileOutput, extension_type) # It performs HCA clustering without generating the dendrogram for the structural domain.
+	leaves_cluster_bio, bioHCA, linkage_bio, CutOff_bio = MASSAcluster.hca_clusters(bio_PCA, names, 'bio', directoryFileOutput, extension_type, linkage_method) # It performs HCA clustering without generating the dendrogram for the biological domain.
+	leaves_cluster_phch, phchHCA, linkage_phch, CutOff_phch = MASSAcluster.hca_clusters(PhCh_PCA, names, 'PhCh', directoryFileOutput, extension_type, linkage_method) # It performs HCA clustering without generating the dendrogram for the physicochemical domain.
+	leaves_cluster_fp, fpHCA, linkage_fp, CutOff_fp = MASSAcluster.hca_clusters(FP_PCA, names, 'FP', directoryFileOutput, extension_type, linkage_method) # It performs HCA clustering without generating the dendrogram for the structural domain.
 
 	dataframe = MASSApreparation.organize_df_clusterization(dataframe, bioHCA, 'bio') # It adds the biological cluster identification to the spreadsheet.
 	dataframe = MASSApreparation.organize_df_clusterization(dataframe, phchHCA, 'PhCh') # It adds the physicochemical cluster identification to the spreadsheet.
@@ -72,6 +72,12 @@ def main(): # Main subroutine, allows the program to run directly from the comma
 	## Split into training, test:
 	dataframe, test_molecules = MASSAsplit.split_train_test_sets(dataframe, training_percent, test_percent)
 
+
+	## Clean any log.txt file in directory:
+	ArqLog = directoryFileOutput+'\\log.txt'
+	WriteLog = open(ArqLog, 'w')
+	WriteLog.write('\n')
+	WriteLog.close()
 
 	## Bar plot of frequencies (Calculates the percentages of molecules in each cluster for each dataset and generates a bar graph for each domain):
 	bio_total, bio_training, bio_test = MASSAsplit.freq_clusters(dataframe, directoryFileOutput, extension_type, 'Cluster_Biological', barplot_Xfont_size) # Biological Bar Plot

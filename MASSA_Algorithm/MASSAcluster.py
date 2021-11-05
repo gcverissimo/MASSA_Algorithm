@@ -38,8 +38,8 @@ def categorical_number_of_clusters(file):
 		distances.append(numerator/denominator) # Distance between a point and a line.
 	return (distances.index(max(distances)) + 2)
 
-def optimal_threshold(file, ident, directoryFileOutput, extension_type):
-	clustering = AgglomerativeClustering(compute_distances=True, linkage='complete',affinity='euclidean').fit(file) # Perform HCA.
+def optimal_threshold(file, ident, directoryFileOutput, extension_type, linkage_method):
+	clustering = AgglomerativeClustering(compute_distances=True, linkage=linkage_method, affinity='euclidean').fit(file) # Perform HCA.
 	distances_list = (sorted(list(clustering.distances_))) # Extract the calculated Euclidean distance between clusters.
 	distances_list.reverse() # Sort the list in descending order. 
 
@@ -76,10 +76,10 @@ def plot_euclidean_distance(distances_list,name_euc_dist_file,title_distances): 
 	plt.savefig(name_euc_dist_file) # Save figure.
 	plt.close() # Close plot.
 
-def hca_clusters(file, labels, ident, directoryFileOutput, extension_type):
+def hca_clusters(file, labels, ident, directoryFileOutput, extension_type, linkage_method):
 	# Get the threshold value (CutOff) and the number of clusters:
-	CutOff, number_of_clusters = optimal_threshold(file, ident, directoryFileOutput, extension_type)
-	linkage = sch.linkage(file, method = 'complete', optimal_ordering=False)
+	CutOff, number_of_clusters = optimal_threshold(file, ident, directoryFileOutput, extension_type, linkage_method)
+	linkage = sch.linkage(file, method=linkage_method, optimal_ordering=False)
 
 	# Get the cluster labels:
 	leaves_cluster = sch.fcluster(linkage, t=number_of_clusters, criterion='maxclust')
@@ -139,17 +139,16 @@ def hca_plot(linkage, labels, leaves_cluster, CutOff, ident, directoryFileOutput
 	list_cluster_color = sorted(list_cluster_color, key=lambda x:x[1])
 	lcc1 = {}
 
+	if ('k' in color_list) or ('#000000' in color_list):
+		lcc1['#000000'] = []
+
 	for i in range(0, len(list_cluster_color)):
 		if list_cluster_color[i][2] == 'k':
-			lcc1['#000000'] = []
 			lcc1['#000000'].append(list_cluster_color[i][1])
 		else:
 			lcc1[list_cluster_color[i][2]] = []
 			lcc1[list_cluster_color[i][2]].append(list_cluster_color[i][1])
 	
-	for i in lcc1.keys():
-		lcc1[i] = list(set(lcc1[i]))[0]
-
 	right_legend = []
 	for i in range(0,len(legend_value.get_lines())):
 		right_legend.append(colrs.to_hex(legend_value.get_lines()[i].get_color()))
@@ -157,11 +156,29 @@ def hca_plot(linkage, labels, leaves_cluster, CutOff, ident, directoryFileOutput
 	# Assign the right legend to each cluster:
 	set_leaves_cluster = []
 	for i in right_legend:
-		if lcc1[i] < 10:
-			c_name = 'cluster 0' + str(lcc1[i])
+		if(len(lcc1[i])) > 1:
+			c_name = ''
+			for z in range(0, len(lcc1[i])):
+				a = lcc1[i][z]
+				if z == len(lcc1[i])-1:
+					if a < 10:
+						c_name += 'cluster 0' + str(a) + ' (outliers)'
+					else:
+						c_name += 'cluster ' + str(a) + ' (outliers)'
+				else:
+					if a < 10:
+						c_name += 'cluster 0' + str(a) + ', '
+					else:
+						c_name += 'cluster ' + str(a) + ', '
+			set_leaves_cluster.append(c_name)
 		else:
-			c_name = 'cluster ' + str(lcc1[i])
-		set_leaves_cluster.append(c_name)
+			a = int(list(set(lcc1[i]))[0])
+			if a < 10:
+				c_name = 'cluster 0' + str(a)
+				set_leaves_cluster.append(c_name)
+			else:
+				c_name = 'cluster ' + str(a)
+				set_leaves_cluster.append(c_name)
 	legend_value = plt.legend(set_leaves_cluster)
 
 	# Apply cluster color to x-labels:

@@ -62,6 +62,10 @@ A list of optional arguments include:
 * **Font size for X-axis of bar plots**: ```-x``` or ```--barplot_Xfont_size```.
     * Sets the font size on the x-axis of the bar plot (cluster labels).
     * Default = 12.
+* **HCA linkage method**: ```-l``` or ```--linkage_method```.
+    * The linkage criterion to use. The algorithm will merge the pairs of cluster that minimize this criterion.
+	* Options = complete, single, ward, average.
+    * Default = complete.
 
 #### Command line help
 A full description of the arguments can also be viewed directly from the command line using the command:
