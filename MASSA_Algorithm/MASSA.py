@@ -58,15 +58,15 @@ def main(): # Main subroutine, allows the program to run directly from the comma
 	leaves_cluster_phch, phchHCA, linkage_phch, CutOff_phch = MASSAcluster.hca_clusters(PhCh_PCA, names, 'PhCh', directoryFileOutput, extension_type) # It performs HCA clustering without generating the dendrogram for the physicochemical domain.
 	leaves_cluster_fp, fpHCA, linkage_fp, CutOff_fp = MASSAcluster.hca_clusters(FP_PCA, names, 'FP', directoryFileOutput, extension_type) # It performs HCA clustering without generating the dendrogram for the structural domain.
 
-	dataframe = MASSApreparation.organize_hca(dataframe, bioHCA, 'bio') # It adds the biological cluster identification to the spreadsheet.
-	dataframe = MASSApreparation.organize_hca(dataframe, phchHCA, 'PhCh') # It adds the physicochemical cluster identification to the spreadsheet.
-	dataframe = MASSApreparation.organize_hca(dataframe, fpHCA, 'FP') # It adds the structural cluster identification to the spreadsheet.
+	dataframe = MASSApreparation.organize_df_clusterization(dataframe, bioHCA, 'bio') # It adds the biological cluster identification to the spreadsheet.
+	dataframe = MASSApreparation.organize_df_clusterization(dataframe, phchHCA, 'PhCh') # It adds the physicochemical cluster identification to the spreadsheet.
+	dataframe = MASSApreparation.organize_df_clusterization(dataframe, fpHCA, 'FP') # It adds the structural cluster identification to the spreadsheet.
 
 
 	## Second clustering (Kmodes):
 	matrix_for_kmodes = MASSApreparation.organize_for_kmodes(dataframe) # It creates a matrix with cluster identifications for each of the three domains, in order to prepare for Kmodes.
 	allHCA = MASSAcluster.kmodes_clusters(matrix_for_kmodes, names) # It performs Kmodes clustering for the general domain.
-	dataframe = MASSApreparation.organize_hca(dataframe, allHCA, 'all') # It adds the general cluster identification to the spreadsheet.
+	dataframe = MASSApreparation.organize_df_clusterization(dataframe, allHCA, 'all') # It adds the general cluster identification to the spreadsheet.
 
 
 	## Split into training, test:

@@ -17,7 +17,7 @@ def capture_args():
 	optional.add_argument('-b','--number_of_biological', type=int, default=1, help='Number of biological activities that will be used to separate the set into training and test. Default = 1')
 	optional.add_argument('-s','--the_biological_activities', type=str, default=None, help='Enter a list with the names of biological activities separated by commas and no spaces. Example: pIC50,pMIC.')
 	optional.add_argument('-n','--number_of_PCs', type=float, metavar='NUMBER_OF_PRINCIPAL_COMPONENTS', default=0.85, help='Defines the number of principal components to reduce the dimensionality of variables related to biological, physicochemical and structural domains. If the value is a decimal between 0 and 1, the number of principal components is what justifies for (<input number> * 100) percent of the variance. If the value is greater than 1, the number of PCs will be exactly the input integer, but PAY ATTENTION: 1st) If the number of PCs is an integer and equal to or greater than the number of physicochemical properties (7), the PCA step will be bypassed for this domain. 2nd) The same for the biological domain. 3rd) If the number of biological activities is less than 3, the PCA step will be bypassed for this domain. Default = 0.85.')
-	optional.add_argument('-v','--svd_solver_for_PCA', type=str, default='auto', help='See the sklearn.decomposition.PCA topic on https://scikit-learn.org/ for more info. Default = auto.')
+	optional.add_argument('-v','--svd_solver_for_PCA', type=str, default='full', help='See the sklearn.decomposition.PCA topic on https://scikit-learn.org/ for more info. Default = full.')
 	args = parser.parse_args()
 
 	## Definition of arguments:

@@ -52,7 +52,7 @@ A list of optional arguments include:
     * Default = 0.85.
 * **SVD solver parameter for PCA**: ```-v``` or ```--svd_solver_for_PCA```.
     * See the sklearn.decomposition.PCA topic on https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html for more info.
-    * Default = auto.
+    * Default = full.
 * **Extension of image files**: ```-t``` or ```--image_type```.
     * Extension of the image files that will be generated. Suggested = png or svg.
     * Default = png.

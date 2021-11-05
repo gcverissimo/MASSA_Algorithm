@@ -33,7 +33,7 @@ def pca_maker(file, nPCS, svd_parameter):
 		pca_props = pca.fit_transform(file)
 	return pca_props
 
-def organize_hca(file, HCAdict, ident): # Add the cluster identification to the spreadsheet.
+def organize_df_clusterization(file, HCAdict, ident): # Add the cluster identification to the spreadsheet.
 	if ident == 'all':
 		file['Cluster_General'] = pd.Series(HCAdict)
 		return file
