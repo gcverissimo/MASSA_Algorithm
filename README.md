@@ -64,7 +64,7 @@ A list of optional arguments include:
     * Default = 12.
 * **HCA linkage method**: ```-l``` or ```--linkage_method```.
     * The linkage criterion to use. The algorithm will merge the pairs of cluster that minimize this criterion.
-	* Options = complete, single, ward, average.
+    * Options = complete, single, ward, average. For more info, see the scipy.cluster.hierarchy.linkage topic on https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html?highlight=linkage#scipy.cluster.hierarchy.linkage.
     * Default = complete.
 
 #### Command line help
