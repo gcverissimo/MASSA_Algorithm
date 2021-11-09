@@ -25,11 +25,11 @@ def capture_args():
 	FileInput = args.input # It captures the input name and directory+name.
 	undefinedFileOutput = args.output # It captures the output name or directory+name.
 	extension_type = args.image_type # It captures the file extension for images.
-	dendrogram_Xfont_size = args.dendrogram_Xfont_size # It captures the font size for the x-axis of the dendrogram.
-	barplot_Xfont_size = args.barplot_Xfont_size # It captures the font size for the x-axis of the bar plot.
-	training_percent = args.percentage_of_training # It captures the percentage for training set.
-	test_percent = 1 - training_percent # Calculates the percentage of molecules in the test set.
-	numberBioAct = args.number_of_biological # It captures the number of biological activities.
+	dendrogram_Xfont_size = int(args.dendrogram_Xfont_size) # It captures the font size for the x-axis of the dendrogram.
+	barplot_Xfont_size = int(args.barplot_Xfont_size) # It captures the font size for the x-axis of the bar plot.
+	training_percent = round(float(args.percentage_of_training), 3) # It captures the percentage for training set.
+	test_percent = round(float(1 - training_percent), 3) # Calculates the percentage of molecules in the test set.
+	numberBioAct = int(args.number_of_biological) # It captures the number of biological activities.
 	inputnumberPCs = args.number_of_PCs # It captures the input number of PCs.
 	svd_parameter = args.svd_solver_for_PCA # It captures the svd_solver parameter.
 	linkage_method = args.linkage_method # It captures the linkage method.
@@ -54,5 +54,5 @@ def capture_args():
 	else:
 		print(' ERROR: The defined number of main components is invalid.')
 		exit()
-
+	
 	return FileInput, undefinedFileOutput, directoryFileOutput, extension_type, dendrogram_Xfont_size, barplot_Xfont_size, training_percent, test_percent, numberBioAct, BioActAsArgs, nPCS, svd_parameter, linkage_method
