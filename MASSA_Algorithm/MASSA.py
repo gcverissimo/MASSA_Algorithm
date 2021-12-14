@@ -24,10 +24,14 @@ def main(): # Main subroutine, allows the program to run directly from the comma
 	print('Initializing, wait...\n')
 
 
+	## Create log.txt file in directory:
+	ArqLog = directoryFileOutput+'\\log.txt'
+	WriteLog = open(ArqLog, 'w')
+	
+	
 	## Initial file management:
 	MASSAod.output_directory(directoryFileOutput) # It creates the output directories.
-	mols = MASSAopen_files.read_molecules(FileInput) # Read molecules.
-	MASSAopen_files.error_check(mols) # Alert of RDKit fail to read.
+	mols = MASSAopen_files.read_molecules(FileInput, WriteLog) # Read molecules.
 	sdf_property_names = MASSAopen_files.get_sdf_property_names(mols) # Extracting the property names from the ".sdf" input file.
 	molsH = MASSAopen_files.hydrogen_add(mols) # Structure 3D management - It adds hydrogens keeping 3D coordenates.
 
@@ -73,12 +77,6 @@ def main(): # Main subroutine, allows the program to run directly from the comma
 	dataframe, test_molecules = MASSAsplit.split_train_test_sets(dataframe, training_percent, test_percent)
 
 
-	## Clean any log.txt file in directory:
-	ArqLog = directoryFileOutput+'\\log.txt'
-	WriteLog = open(ArqLog, 'w')
-	WriteLog.write('\n')
-	WriteLog.close()
-
 	## Bar plot of frequencies (Calculates the percentages of molecules in each cluster for each dataset and generates a bar graph for each domain):
 	bio_total, bio_training, bio_test = MASSAsplit.freq_clusters(dataframe, directoryFileOutput, extension_type, 'Cluster_Biological', barplot_Xfont_size) # Biological Bar Plot
 	PhCh_total, PhCh_training, PhCh_test = MASSAsplit.freq_clusters(dataframe, directoryFileOutput, extension_type, 'Cluster_Physicochemical', barplot_Xfont_size) # Physicochemical Bar Plot
@@ -110,6 +108,18 @@ def main(): # Main subroutine, allows the program to run directly from the comma
 		FP_ok = returns_zero(FP_total, FP_test) # For structural domain.
 		ok = [bio_ok, PhCh_ok, FP_ok]
 		max_iters += 1
+
+
+	## Write distribution information to log file:
+	bio_distr = 'Biological Distribution'
+	MASSAsplit.log_of_distributions(bio_distr, bio_total, bio_training, bio_test, WriteLog)
+	PhCh_distr = 'Physicochemical Distribution'
+	MASSAsplit.log_of_distributions(PhCh_distr, PhCh_total, PhCh_training, PhCh_test, WriteLog)
+	FP_distr = 'Structural (FP) Distribution'
+	MASSAsplit.log_of_distributions(FP_distr, FP_total, FP_training, FP_test, WriteLog)
+	all_distr = 'General Distribution'
+	MASSAsplit.log_of_distributions(all_distr, all_total, all_training, all_test, WriteLog)
+	WriteLog.close()
 
 
 	## Plot HCAs:

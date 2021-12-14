@@ -1,8 +1,24 @@
 from rdkit.Chem import AllChem
 
-def read_molecules(file):
-	mols = AllChem.SDMolSupplier(file) # Open the input file.
-	return mols
+def read_molecules(file, WriteLog):
+	mols_supplier = AllChem.SDMolSupplier(file, sanitize=False) # Open the input file.
+	mols = []
+	for mol in mols_supplier:
+		try:
+			mols.append(AllChem.rdmolops.SanitizeMol(mol))
+		except Exception as e:
+			mols.append(None)
+			mol_of_error = str(mol.GetProp('_Name'))
+			error = str(e)
+			precomposed = '[Error while reading molecule: \"' + error +  '\". Molecule name: \"' +  mol_of_error + '\".]'
+			composed = precomposed+'\n'
+			print(precomposed)
+			WriteLog.write(composed)
+	if None in mols:
+		print('ERROR: Error while reading molecules. Check the log.txt file for more information. \nERROR: Closing...') # Print an error.
+		exit()
+	mols_supplier_sanitized = AllChem.SDMolSupplier(file, sanitize=True)
+	return mols_supplier_sanitized
 
 def error_check(file):
 	for i in file:
