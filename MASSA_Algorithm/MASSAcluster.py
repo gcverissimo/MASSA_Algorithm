@@ -2,7 +2,6 @@ import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib import colors as colrs
 import scipy.cluster.hierarchy as sch
-from sklearn.cluster import AgglomerativeClustering
 from kmodes import kmodes
 
 def numerical_number_of_clusters(distances_list):
@@ -38,9 +37,9 @@ def categorical_number_of_clusters(file):
 		distances.append(numerator/denominator) # Distance between a point and a line.
 	return (distances.index(max(distances)) + 2)
 
-def optimal_threshold(file, ident, directoryFileOutput, extension_type, linkage_method):
-	clustering = AgglomerativeClustering(compute_distances=True, linkage=linkage_method, affinity='euclidean').fit(file) # Perform HCA.
-	distances_list = (sorted(list(clustering.distances_))) # Extract the calculated Euclidean distance between clusters.
+def optimal_threshold(file, ident, directoryFileOutput, extension_type, linkage):
+	distances_list = sch.maxdists(linkage) # Calculate the maximum distance between clusters.
+	distances_list = (sorted(list(distances_list))) # Extract the calculated Euclidean distance between clusters.
 	distances_list.reverse() # Sort the list in descending order. 
 
 	number_of_clusters = numerical_number_of_clusters(distances_list) # Calculate the number of clusters for the HCA.
@@ -78,8 +77,8 @@ def plot_euclidean_distance(distances_list,name_euc_dist_file,title_distances): 
 
 def hca_clusters(file, labels, ident, directoryFileOutput, extension_type, linkage_method):
 	# Get the threshold value (CutOff) and the number of clusters:
-	CutOff, number_of_clusters = optimal_threshold(file, ident, directoryFileOutput, extension_type, linkage_method)
 	linkage = sch.linkage(file, method=linkage_method, optimal_ordering=False)
+	CutOff, number_of_clusters = optimal_threshold(file, ident, directoryFileOutput, extension_type, linkage)
 
 	# Get the cluster labels:
 	leaves_cluster = sch.fcluster(linkage, t=number_of_clusters, criterion='maxclust')
