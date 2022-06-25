@@ -39,7 +39,7 @@ def capture_args():
 	else:
 		BioActAsArgs = None 
 
-	if ('/' in undefinedFileOutput) or ('/' in undefinedFileOutput): # If a directory path is passed along with the filename it copies only the directory path.
+	if ('\\' in undefinedFileOutput) or ('/' in undefinedFileOutput): # If a directory path is passed along with the filename it copies only the directory path.
 		outputsplitted = re.split('\\\\|/', undefinedFileOutput)
 		outputsplitted[-1] = ''
 		directoryFileOutput = '/'.join(outputsplitted)
