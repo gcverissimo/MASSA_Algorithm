@@ -17,8 +17,8 @@ cd MASSA_Algorithm
 python setup.py install
 ```
 ### Requirements
-* python: >= 3.7;
-* rdkit (RDKit will not be installed automatically with the package. Recommended cross-platform installation via conda. For more information on how to install RDKit, see: https://www.rdkit.org/docs/Install.html);
+* python: >= 3.8;
+* rdkit;
 * numpy;
 * pandas;
 * matplotlib: >= 3.2;
@@ -64,7 +64,7 @@ A list of optional arguments include:
     * Default = 12.
 * **HCA linkage method**: ```-l``` or ```--linkage_method```.
     * The linkage criterion to use. The algorithm will merge the pairs of cluster that minimize this criterion.
-    * Options = complete, single, ward, average. For more info, see the scipy.cluster.hierarchy.linkage topic on https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html?highlight=linkage#scipy.cluster.hierarchy.linkage.
+    * Options = complete, single, ward, average, weighted, centroid, median. For more info, see the scipy.cluster.hierarchy.linkage topic on https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html?highlight=linkage#scipy.cluster.hierarchy.linkage.
     * Default = complete.
 
 #### Command line help

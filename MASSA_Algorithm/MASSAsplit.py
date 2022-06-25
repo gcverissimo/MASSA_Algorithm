@@ -75,16 +75,16 @@ def freq_clusters(file, directoryFileOutput, extension_type, Cluster_Domain, bar
 
 	if Cluster_Domain == 'Cluster_Biological':
 		ax.set_title('Distribution of dataset: Biological Clustering')
-		plt.savefig(directoryFileOutput+'\\Images\\Distribution\\Biological.'+extension_type)
+		plt.savefig(directoryFileOutput+'/Images/Distribution/Biological.'+extension_type)
 	elif Cluster_Domain == 'Cluster_Structural':
 		ax.set_title('Distribution of dataset: Structural Clustering')
-		plt.savefig(directoryFileOutput+'\\Images\\Distribution\\Structural.'+extension_type)
+		plt.savefig(directoryFileOutput+'/Images/Distribution/Structural.'+extension_type)
 	elif Cluster_Domain == 'Cluster_Physicochemical':
 		ax.set_title('Distribution of dataset: Physicochemical Clustering')
-		plt.savefig(directoryFileOutput+'\\Images\\Distribution\\Physicochemical.'+extension_type)
+		plt.savefig(directoryFileOutput+'/Images/Distribution/Physicochemical.'+extension_type)
 	elif Cluster_Domain == 'Cluster_General':
 		ax.set_title('Distribution of dataset: General Clustering')
-		plt.savefig(directoryFileOutput+'\\Images\\Distribution\\General.'+extension_type)
+		plt.savefig(directoryFileOutput+'/Images/Distribution/General.'+extension_type)
 	plt.close()
 	return clusters_total, clusters_training, clusters_test
 

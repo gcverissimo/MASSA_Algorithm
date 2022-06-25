@@ -39,13 +39,13 @@ def capture_args():
 	else:
 		BioActAsArgs = None 
 
-	if ('\\' in undefinedFileOutput) or ('/' in undefinedFileOutput): # If a directory path is passed along with the filename it copies only the directory path.
+	if ('/' in undefinedFileOutput) or ('/' in undefinedFileOutput): # If a directory path is passed along with the filename it copies only the directory path.
 		outputsplitted = re.split('\\\\|/', undefinedFileOutput)
 		outputsplitted[-1] = ''
-		directoryFileOutput = '\\'.join(outputsplitted)
+		directoryFileOutput = '/'.join(outputsplitted)
 		del outputsplitted
 	else: # If only the filename is passed, the directory path is taken by os.getcwd().
-		directoryFileOutput = str(os.getcwd()) + '\\'
+		directoryFileOutput = str(os.getcwd()) + '/'
 	
 	if (inputnumberPCs > 1):
 		nPCS = int(inputnumberPCs)
