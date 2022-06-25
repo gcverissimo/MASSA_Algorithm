@@ -46,18 +46,18 @@ def optimal_threshold(file, ident, directoryFileOutput, extension_type, linkage)
 	CutOff = distances_list[number_of_clusters - 2] # Get the cutoff threshold for the dendrogram.
 
 	if ident == 'bio':
-		name_euc_dist_file = directoryFileOutput+'\\Images\\Distance_HCA_Images\\Dist_HCA_biological.'+extension_type # Define the name, directory and extension of the Euclidean distance graph.
+		name_euc_dist_file = directoryFileOutput+'/Images/Distance_HCA_Images/Dist_HCA_biological.'+extension_type # Define the name, directory and extension of the Euclidean distance graph.
 		title_distances = 'Plot of Euclidean Distances from Biological HCA'
 		print('Number of clusters:')
 		print('Biological:', number_of_clusters) # Print the number of clusters for the biological domain.
 		plot_euclidean_distance(distances_list, name_euc_dist_file, title_distances) # Plot the graph of Euclidean distances.
 	elif ident == 'PhCh':
-		name_euc_dist_file = directoryFileOutput+'\\Images\\Distance_HCA_Images\\Dist_HCA_physicochemical.'+extension_type # Define the name, directory and extension of the Euclidean distance graph.
+		name_euc_dist_file = directoryFileOutput+'/Images/Distance_HCA_Images/Dist_HCA_physicochemical.'+extension_type # Define the name, directory and extension of the Euclidean distance graph.
 		title_distances = 'Plot of Euclidean Distances from Physicochemical HCA'
 		print('Physicochemical:', number_of_clusters) # Print the number of clusters for the physicochemical domain.
 		plot_euclidean_distance(distances_list, name_euc_dist_file, title_distances) # Plot the graph of Euclidean distances.
 	else:
-		name_euc_dist_file = directoryFileOutput+'\\Images\\Distance_HCA_Images\\Dist_HCA_structural.'+extension_type # Define the name, directory and extension of the Euclidean distance graph.
+		name_euc_dist_file = directoryFileOutput+'/Images/Distance_HCA_Images/Dist_HCA_structural.'+extension_type # Define the name, directory and extension of the Euclidean distance graph.
 		title_distances = 'Plot of Euclidean Distances from Structural HCA'
 		print('Structural:', number_of_clusters) # Print the number of clusters for the structural domain.
 		plot_euclidean_distance(distances_list, name_euc_dist_file, title_distances) # Plot the graph of Euclidean distances.
@@ -188,15 +188,15 @@ def hca_plot(linkage, labels, leaves_cluster, CutOff, ident, directoryFileOutput
 	# Define the title of the graph and saves the figure:
 	if ident == 'bio':
 		plt.title('HCA of biological activity')
-		plt.savefig(directoryFileOutput+'\\Images\\Dendrogram_HCA_Images\\HCA_biological.'+extension_type)
+		plt.savefig(directoryFileOutput+'/Images/Dendrogram_HCA_Images/HCA_biological.'+extension_type)
 		plt.close()
 	elif ident == 'PhCh':
 		plt.title('HCA of physicochemical properties')
-		plt.savefig(directoryFileOutput+'\\Images\\Dendrogram_HCA_Images\\HCA_physicochemical.'+extension_type)
+		plt.savefig(directoryFileOutput+'/Images/Dendrogram_HCA_Images/HCA_physicochemical.'+extension_type)
 		plt.close()
 	else:
 		plt.title('HCA of AtomPairs fingerprint')
-		plt.savefig(directoryFileOutput+'\\Images\\Dendrogram_HCA_Images\\HCA_structural.'+extension_type)
+		plt.savefig(directoryFileOutput+'/Images/Dendrogram_HCA_Images/HCA_structural.'+extension_type)
 		plt.close()
 
 def kmodes_clusters(file, names):

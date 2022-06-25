@@ -25,7 +25,7 @@ def main(): # Main subroutine, allows the program to run directly from the comma
 
 
 	## Create log.txt file in directory:
-	ArqLog = directoryFileOutput+'\\log.txt'
+	ArqLog = directoryFileOutput+'/log.txt'
 	WriteLog = open(ArqLog, 'w')
 	
 	
