@@ -123,10 +123,11 @@ def main(): # Main subroutine, allows the program to run directly from the comma
 
 
 	## Plot HCAs:
-	print('\nGenerating dendrogram images. Please wait...')
-	MASSAcluster.hca_plot(linkage_bio, names, leaves_cluster_bio, CutOff_bio, 'bio', directoryFileOutput, extension_type, dendrogram_Xfont_size, test_molecules, flag_dendrogram) #Bio_Plot: Plot the HCA dendrogram
-	MASSAcluster.hca_plot(linkage_phch, names, leaves_cluster_phch, CutOff_phch, 'PhCh', directoryFileOutput, extension_type, dendrogram_Xfont_size, test_molecules, flag_dendrogram) #PhCh_Plot: Plot the HCA dendrogram
-	MASSAcluster.hca_plot(linkage_fp, names, leaves_cluster_fp, CutOff_fp, 'FP', directoryFileOutput, extension_type, dendrogram_Xfont_size, test_molecules, flag_dendrogram) #FP_Plot: Plot the HCA dendrogram
+	if flag_dendrogram == True:
+		print('\nGenerating dendrogram images. Please wait...')
+		MASSAcluster.hca_plot(linkage_bio, names, leaves_cluster_bio, CutOff_bio, 'bio', directoryFileOutput, extension_type, dendrogram_Xfont_size, test_molecules) #Bio_Plot: Plot the HCA dendrogram
+		MASSAcluster.hca_plot(linkage_phch, names, leaves_cluster_phch, CutOff_phch, 'PhCh', directoryFileOutput, extension_type, dendrogram_Xfont_size, test_molecules) #PhCh_Plot: Plot the HCA dendrogram
+		MASSAcluster.hca_plot(linkage_fp, names, leaves_cluster_fp, CutOff_fp, 'FP', directoryFileOutput, extension_type, dendrogram_Xfont_size, test_molecules) #FP_Plot: Plot the HCA dendrogram
 
 
 	## Output management:

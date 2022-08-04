@@ -86,119 +86,118 @@ def hca_clusters(file, labels, ident, directoryFileOutput, extension_type, linka
 
 	return leaves_cluster, cluster_dict, linkage, CutOff
 
-def hca_plot(linkage, labels, leaves_cluster, CutOff, ident, directoryFileOutput, extension_type, dendrogram_xfont_size, index_of_test_molecules, flag_dendrogram):
-	if flag_dendrogram == True:
-		# Create an arrow for molecules in test set:
-		labels_arrow = labels.copy()
-		for i in range(0,len(labels_arrow)):
-			if labels_arrow[i] in index_of_test_molecules:
-				labels_arrow[i] = ('→ '+labels_arrow[i])
+def hca_plot(linkage, labels, leaves_cluster, CutOff, ident, directoryFileOutput, extension_type, dendrogram_xfont_size, index_of_test_molecules):
+	# Create an arrow for molecules in test set:
+	labels_arrow = labels.copy()
+	for i in range(0,len(labels_arrow)):
+		if labels_arrow[i] in index_of_test_molecules:
+			labels_arrow[i] = ('→ '+labels_arrow[i])
 
-		# Working with colors:
-		hexRGB = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf', '#691605', '#b3f084', '#ffee00', '#00ff6e', '#0400ff', '#c4c4c0', '#ff00fb', '#290e0e', '#12290e', '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf', '#691605', '#b3f084', '#ffee00', '#00ff6e', '#0400ff', '#c4c4c0', '#ff00fb', '#290e0e', '#12290e'] # Definition of which colors (colorblind friendly) will be used for each cluster (1-19).
-		sch.set_link_color_palette(hexRGB) # Set hexRGB as the dendrogram colors.
+	# Working with colors:
+	hexRGB = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf', '#691605', '#b3f084', '#ffee00', '#00ff6e', '#0400ff', '#c4c4c0', '#ff00fb', '#290e0e', '#12290e', '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf', '#691605', '#b3f084', '#ffee00', '#00ff6e', '#0400ff', '#c4c4c0', '#ff00fb', '#290e0e', '#12290e'] # Definition of which colors (colorblind friendly) will be used for each cluster (1-19).
+	sch.set_link_color_palette(hexRGB) # Set hexRGB as the dendrogram colors.
 
-		# Initial setting of HCA dendrograms:
-		plt.figure(figsize=(20, 10), dpi= 300) # Set the image space.
-		dendrogram = sch.dendrogram(linkage, color_threshold=CutOff, above_threshold_color='k', labels=labels_arrow, get_leaves=True)
+	# Initial setting of HCA dendrograms:
+	plt.figure(figsize=(20, 10), dpi= 300) # Set the image space.
+	dendrogram = sch.dendrogram(linkage, color_threshold=CutOff, above_threshold_color='k', labels=labels_arrow, get_leaves=True)
 
-		# Set graphs font size for both axis and adjust the plot in image space:
-		plt.yticks(fontsize=12)
-		plt.xticks(fontsize=dendrogram_xfont_size)
-		plt.ylabel('Euclidean distance',fontsize=12)
-		plt.subplots_adjust(left=0.06 ,right=0.96)
+	# Set graphs font size for both axis and adjust the plot in image space:
+	plt.yticks(fontsize=12)
+	plt.xticks(fontsize=dendrogram_xfont_size)
+	plt.ylabel('Euclidean distance',fontsize=12)
+	plt.subplots_adjust(left=0.06 ,right=0.96)
 
-		# Set new scale for y axis (which is 2x the number of points in the previous scale):
-		b = [float(i) for i in plt.yticks()[0]]
-		scale = b[1]-b[0]
-		new_scale = scale/2
-		new_arange = np.arange(min(b)-scale/20,max(b)+new_scale,new_scale)
-		plt.yticks(new_arange)
+	# Set new scale for y axis (which is 2x the number of points in the previous scale):
+	b = [float(i) for i in plt.yticks()[0]]
+	scale = b[1]-b[0]
+	new_scale = scale/2
+	new_arange = np.arange(min(b)-scale/20,max(b)+new_scale,new_scale)
+	plt.yticks(new_arange)
 
-		# Add ticks to x-axis:
-		plt.tick_params(axis='x', which='both', bottom=True, top=False, labelbottom=True)
+	# Add ticks to x-axis:
+	plt.tick_params(axis='x', which='both', bottom=True, top=False, labelbottom=True)
 
-		# Assign the wrong legend to each cluster:
-		set__leaves_cluster = sorted(list(set(leaves_cluster)))
-		legend_value = plt.legend(set__leaves_cluster)
+	# Assign the wrong legend to each cluster:
+	set__leaves_cluster = sorted(list(set(leaves_cluster)))
+	legend_value = plt.legend(set__leaves_cluster)
 
-		# Get the color for each molecule:
-		color_list = list(dendrogram['leaves_color_list'])
-		ivl_list = list(dendrogram['ivl'])
-		dictionary_of_clusters = dict(zip(labels, leaves_cluster))
-		for i in range(0,len(ivl_list)):
-			if '→ ' in ivl_list[i]:
-				ivl_list[i] = ivl_list[i].replace('→ ', '')
-		dictionary_of_colors = dict(zip(ivl_list, color_list))
+	# Get the color for each molecule:
+	color_list = list(dendrogram['leaves_color_list'])
+	ivl_list = list(dendrogram['ivl'])
+	dictionary_of_clusters = dict(zip(labels, leaves_cluster))
+	for i in range(0,len(ivl_list)):
+		if '→ ' in ivl_list[i]:
+			ivl_list[i] = ivl_list[i].replace('→ ', '')
+	dictionary_of_colors = dict(zip(ivl_list, color_list))
 
-		# Get the right cluster colors:
-		list_cluster_color = []
-		for i in dictionary_of_clusters.keys():
-			list_cluster_color.append([i, dictionary_of_clusters[i], dictionary_of_colors[i]])
+	# Get the right cluster colors:
+	list_cluster_color = []
+	for i in dictionary_of_clusters.keys():
+		list_cluster_color.append([i, dictionary_of_clusters[i], dictionary_of_colors[i]])
 
-		list_cluster_color = sorted(list_cluster_color, key=lambda x:x[1])
-		lcc1 = {}
+	list_cluster_color = sorted(list_cluster_color, key=lambda x:x[1])
+	lcc1 = {}
 
-		if ('k' in color_list) or ('#000000' in color_list):
-			lcc1['#000000'] = []
+	if ('k' in color_list) or ('#000000' in color_list):
+		lcc1['#000000'] = []
 
-		for i in range(0, len(list_cluster_color)):
-			if list_cluster_color[i][2] == 'k':
-				lcc1['#000000'].append(list_cluster_color[i][1])
-			else:
-				lcc1[list_cluster_color[i][2]] = []
-				lcc1[list_cluster_color[i][2]].append(list_cluster_color[i][1])
-		
-		right_legend = []
-		for i in range(0,len(legend_value.get_lines())):
-			right_legend.append(colrs.to_hex(legend_value.get_lines()[i].get_color()))
-		
-		# Assign the right legend to each cluster:
-		set_leaves_cluster = []
-		for i in right_legend:
-			if(len(lcc1[i])) > 1:
-				c_name = ''
-				for z in range(0, len(lcc1[i])):
-					a = lcc1[i][z]
-					if z == len(lcc1[i])-1:
-						if a < 10:
-							c_name += 'cluster 0' + str(a) + ' (outliers)'
-						else:
-							c_name += 'cluster ' + str(a) + ' (outliers)'
+	for i in range(0, len(list_cluster_color)):
+		if list_cluster_color[i][2] == 'k':
+			lcc1['#000000'].append(list_cluster_color[i][1])
+		else:
+			lcc1[list_cluster_color[i][2]] = []
+			lcc1[list_cluster_color[i][2]].append(list_cluster_color[i][1])
+	
+	right_legend = []
+	for i in range(0,len(legend_value.get_lines())):
+		right_legend.append(colrs.to_hex(legend_value.get_lines()[i].get_color()))
+	
+	# Assign the right legend to each cluster:
+	set_leaves_cluster = []
+	for i in right_legend:
+		if(len(lcc1[i])) > 1:
+			c_name = ''
+			for z in range(0, len(lcc1[i])):
+				a = lcc1[i][z]
+				if z == len(lcc1[i])-1:
+					if a < 10:
+						c_name += 'cluster 0' + str(a) + ' (outliers)'
 					else:
-						if a < 10:
-							c_name += 'cluster 0' + str(a) + ', '
-						else:
-							c_name += 'cluster ' + str(a) + ', '
+						c_name += 'cluster ' + str(a) + ' (outliers)'
+				else:
+					if a < 10:
+						c_name += 'cluster 0' + str(a) + ', '
+					else:
+						c_name += 'cluster ' + str(a) + ', '
+			set_leaves_cluster.append(c_name)
+		else:
+			a = int(list(set(lcc1[i]))[0])
+			if a < 10:
+				c_name = 'cluster 0' + str(a)
 				set_leaves_cluster.append(c_name)
 			else:
-				a = int(list(set(lcc1[i]))[0])
-				if a < 10:
-					c_name = 'cluster 0' + str(a)
-					set_leaves_cluster.append(c_name)
-				else:
-					c_name = 'cluster ' + str(a)
-					set_leaves_cluster.append(c_name)
-		legend_value = plt.legend(set_leaves_cluster)
+				c_name = 'cluster ' + str(a)
+				set_leaves_cluster.append(c_name)
+	legend_value = plt.legend(set_leaves_cluster)
 
-		# Apply cluster color to x-labels:
-		zip_label_color = list(zip(plt.gca().get_xticklabels(), color_list))
-		for i,a in zip_label_color:
-			i.set_color(a)
+	# Apply cluster color to x-labels:
+	zip_label_color = list(zip(plt.gca().get_xticklabels(), color_list))
+	for i,a in zip_label_color:
+		i.set_color(a)
 
-		# Define the title of the graph and saves the figure:
-		if ident == 'bio':
-			plt.title('HCA of biological activity')
-			plt.savefig(directoryFileOutput+'/Images/Dendrogram_HCA_Images/HCA_biological.'+extension_type)
-			plt.close()
-		elif ident == 'PhCh':
-			plt.title('HCA of physicochemical properties')
-			plt.savefig(directoryFileOutput+'/Images/Dendrogram_HCA_Images/HCA_physicochemical.'+extension_type)
-			plt.close()
-		else:
-			plt.title('HCA of AtomPairs fingerprint')
-			plt.savefig(directoryFileOutput+'/Images/Dendrogram_HCA_Images/HCA_structural.'+extension_type)
-			plt.close()
+	# Define the title of the graph and saves the figure:
+	if ident == 'bio':
+		plt.title('HCA of biological activity')
+		plt.savefig(directoryFileOutput+'/Images/Dendrogram_HCA_Images/HCA_biological.'+extension_type)
+		plt.close()
+	elif ident == 'PhCh':
+		plt.title('HCA of physicochemical properties')
+		plt.savefig(directoryFileOutput+'/Images/Dendrogram_HCA_Images/HCA_physicochemical.'+extension_type)
+		plt.close()
+	else:
+		plt.title('HCA of AtomPairs fingerprint')
+		plt.savefig(directoryFileOutput+'/Images/Dendrogram_HCA_Images/HCA_structural.'+extension_type)
+		plt.close()
 
 def kmodes_clusters(file, names):
 	# Calculate the number of clusters for the Kmodes:
