@@ -20,7 +20,7 @@ def returns_zero(total, test):
 def main(): # Main subroutine, allows the program to run directly from the command line after installed via pip.
 	## Initializing from the command line:
 	MASSAlogos.initial_print() # Print the program logo.
-	FileInput, FileOutput, directoryFileOutput, extension_type, dendrogram_Xfont_size, barplot_Xfont_size, training_percent, test_percent, numberBioAct, BioActAsArgs, nPCS, svd_parameter, linkage_method = MASSAargs.capture_args() # It captures command line arguments.
+	FileInput, FileOutput, directoryFileOutput, extension_type, dendrogram_Xfont_size, barplot_Xfont_size, training_percent, test_percent, numberBioAct, BioActAsArgs, nPCS, svd_parameter, linkage_method, flag_dendrogram = MASSAargs.capture_args() # It captures command line arguments.
 	print('Initializing, wait...\n')
 
 
@@ -124,9 +124,9 @@ def main(): # Main subroutine, allows the program to run directly from the comma
 
 	## Plot HCAs:
 	print('\nGenerating dendrogram images. Please wait...')
-	MASSAcluster.hca_plot(linkage_bio, names, leaves_cluster_bio, CutOff_bio, 'bio', directoryFileOutput, extension_type, dendrogram_Xfont_size, test_molecules) #Bio_Plot: Plot the HCA dendrogram
-	MASSAcluster.hca_plot(linkage_phch, names, leaves_cluster_phch, CutOff_phch, 'PhCh', directoryFileOutput, extension_type, dendrogram_Xfont_size, test_molecules) #PhCh_Plot: Plot the HCA dendrogram
-	MASSAcluster.hca_plot(linkage_fp, names, leaves_cluster_fp, CutOff_fp, 'FP', directoryFileOutput, extension_type, dendrogram_Xfont_size, test_molecules) #FP_Plot: Plot the HCA dendrogram
+	MASSAcluster.hca_plot(linkage_bio, names, leaves_cluster_bio, CutOff_bio, 'bio', directoryFileOutput, extension_type, dendrogram_Xfont_size, test_molecules, flag_dendrogram) #Bio_Plot: Plot the HCA dendrogram
+	MASSAcluster.hca_plot(linkage_phch, names, leaves_cluster_phch, CutOff_phch, 'PhCh', directoryFileOutput, extension_type, dendrogram_Xfont_size, test_molecules, flag_dendrogram) #PhCh_Plot: Plot the HCA dendrogram
+	MASSAcluster.hca_plot(linkage_fp, names, leaves_cluster_fp, CutOff_fp, 'FP', directoryFileOutput, extension_type, dendrogram_Xfont_size, test_molecules, flag_dendrogram) #FP_Plot: Plot the HCA dendrogram
 
 
 	## Output management:

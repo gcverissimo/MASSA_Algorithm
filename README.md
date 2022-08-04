@@ -66,6 +66,10 @@ A list of optional arguments include:
     * The linkage criterion to use. The algorithm will merge the pairs of cluster that minimize this criterion.
     * Options = complete, single, ward, average, weighted, centroid, median. For more info, see the scipy.cluster.hierarchy.linkage topic on https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html?highlight=linkage#scipy.cluster.hierarchy.linkage.
     * Default = complete.
+* **Enable Dendrogram plot**: ```-f``` or ```--dendrogram_plot```.
+    * Defines whether or not dendrogram images will be generated.
+	* Options = true (dendrogram will be generated), false (dendrogram will not be generated).
+    * Default = true.
 
 #### Command line help
 A full description of the arguments can also be viewed directly from the command line using the command:
