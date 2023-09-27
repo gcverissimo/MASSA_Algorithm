@@ -52,7 +52,7 @@ def freq_clusters(file, directoryFileOutput, extension_type, Cluster_Domain, bar
 	# Separate the cluster IDs from their frequencies:
 	label_total = [list_total[i][0] for i in range(0,len(list_total))]
 	percentages_total = [list_total[i][1] for i in range(0,len(list_total))]
-	percentages_training = [list_total[i][1] for i in range(0,len(list_training))]
+	percentages_training = [list_training[i][1] for i in range(0,len(list_training))]
 	percentages_test = [list_test[i][1] for i in range(0,len(list_test))]
 
 	# Create an "np.arange" for each set:
