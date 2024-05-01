@@ -17,13 +17,13 @@ cd MASSA_Algorithm
 python setup.py install
 ```
 ### Requirements
-* python: >= 3.8;
+* python: = 3.8 or 3.9;
 * rdkit;
 * numpy;
 * pandas;
 * matplotlib: >= 3.2;
 * scipy: >= 1.6;
-* scikit-learn: >= 0.24;
+* scikit-learn: = 0.24;
 * kmodes:¹ >= 0.10.
 
 ## Usage
@@ -82,6 +82,12 @@ MASSA_Algorithm --help
 ```
 
 ## Cite
+* To ensure accurate citation, kindly include a reference to the MASSA article, accessible via the DOI:
+
+https://doi.org/10.1007/s10822-023-00536-y
+
+* Furthermore, please incorporate the program citation following the provided template:
+
 ```
 @Misc{veríssimo2021,
     author = {Gabriel Corrêa Veríssimo},
