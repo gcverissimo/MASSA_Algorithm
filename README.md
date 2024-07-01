@@ -17,13 +17,13 @@ cd MASSA_Algorithm
 python setup.py install
 ```
 ### Requirements
-* python: = 3.8 or 3.9;
+* python: >= 3.8;
 * rdkit;
-* numpy;
+* numpy: < 2.0;
 * pandas;
 * matplotlib: >= 3.2;
 * scipy: >= 1.6;
-* scikit-learn: = 0.24;
+* scikit-learn: > 0.24;
 * kmodes:¹ >= 0.10.
 
 ## Usage
