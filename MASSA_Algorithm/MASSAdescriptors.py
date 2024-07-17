@@ -1,7 +1,8 @@
 import pandas as pd
 from rdkit.Chem import Descriptors
-from rdkit.Chem import rdMolDescriptors
-from rdkit.DataStructs import cDataStructs
+from rdkit.Chem import AllChem
+# from rdkit.Chem import rdMolDescriptors
+# from rdkit.DataStructs import cDataStructs
 
 def physicochemical_descriptors(file):
 	NumHAcceptors = {}
@@ -33,9 +34,25 @@ def physicochemical_descriptors(file):
 def atompairs_fingerprint(file):
 	FP_dict = {}
 	for i in file['molecules']:
-		FPasBitVect = rdMolDescriptors.GetHashedAtomPairFingerprintAsBitVect(i, nBits=1024) # Determine the fingerprint of the molecule using AtomPairs Fingerprint.
-		FPasBinary = cDataStructs.BitVectToText(FPasBitVect) # Convert fingerprint to text.
-		BinaryAsList = list(FPasBinary) # Each bit of fingerprint will be a string item of a list.
+		# Updated AtomPair Fingerprint (without count).
+		# To use AtomPairCount use the function (fpgen.GetCountFingerprintAsNumPy).
+		# 1) Determine the fingerprint generator using AtomPairs Fingerprint.
+		# 2) Generate the numpy array fingerprint using the generator.
+		# 3) Transform the np.array in list.
+		fpgen = AllChem.GetAtomPairGenerator(fpSize=1024)  # 1
+		FPasBinary = fpgen.GetFingerprintAsNumPy(i)  # 2
+		BinaryAsList = list(FPasBinary)  # 3
+
+		# DEPRECATED (by RDKit):
+		# 1) Determine the fingerprint of the molecule using AtomPairs Fingerprint.
+		# 2) Convert fingerprint to text.
+		# 3) Each bit of fingerprint will be a string item of a list.
+		# FPasBitVect = rdMolDescriptors.GetHashedAtomPairFingerprintAsBitVect(
+		# i, nBits=1024
+		# ) # 1
+		# FPasBinary = cDataStructs.BitVectToText(FPasBitVect) # 2
+		# BinaryAsList = list(FPasBinary) # 3
+
 		BinaryAsNewList = []
 		for a in BinaryAsList:
 			b = int(a) # Each bit of fingerprint will be a int item of a list.
