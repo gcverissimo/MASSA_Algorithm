@@ -135,7 +135,7 @@ def read_EXCEL_smiles(file, WriteLog):
 
 def read_CSV_smiles(file, WriteLog):
     df_supplier = pd.read_csv(file, sep=",")
-    mols_sanitized = read_df_smiles(df_supplier)
+    mols_sanitized = read_df_smiles(df_supplier, WriteLog)
     return mols_sanitized
 
 
