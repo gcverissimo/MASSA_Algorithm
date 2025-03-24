@@ -22,7 +22,7 @@ def output_mols(dataframe, FileOutput): # Add, for each molecule, the values of 
 		dict_molecules[i].SetProp('HBA count', str(dict_NumHAcceptors[i]))
 		dict_molecules[i].SetProp('HBD count', str(dict_NumHDonors[i]))
 		dict_molecules[i].SetProp('ExactMolWt', str(dict_ExactMolWt[i]))
-		dict_molecules[i].SetProp('NumRotatableBounds', str(dict_NumRotatableBonds[i]))
+		dict_molecules[i].SetProp('NumRotatableBonds', str(dict_NumRotatableBonds[i]))
 		dict_molecules[i].SetProp('FractionCsp3', str(dict_FractionCSP3[i]))
 		dict_molecules[i].SetProp('TPSA', str(dict_TPSA[i]))
 		dict_molecules[i].SetProp('LogP_WildmanCrippen', str(dict_LogP_WildmanCrippen[i]))
