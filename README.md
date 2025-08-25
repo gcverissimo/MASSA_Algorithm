@@ -1,6 +1,10 @@
 # MASSA Algorithm
 MASSA Algorithm: A tool for separating data sets of molecules into training and test sets. Developed with the objective of preparing data sets for the generation of prediction models in cheminformatics.
 
+
+## Version 1.0.0
+Version 1.0.0 includes a code refactoring and adds the ability to split data into training, test, and validation subsets.
+
 ## Instalation
 MASSA Algorithm can be installed using pip:
 ```
@@ -25,6 +29,8 @@ python setup.py install
 * scipy: >= 1.6;
 * scikit-learn: > 0.24;
 * kmodes:¹ >= 0.10.
+Newer versions of the packages may also work, but they need to be tested.
+    NOTE: Also tested on: scikit-learn: 1.7.0, scipy: 1.16.1, numpy: 2.0.2, rdkit: 2025.03.5.
 
 ## Usage
 Once installed, the program can be run directly from the command line:
