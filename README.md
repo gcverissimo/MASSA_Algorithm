@@ -1,6 +1,10 @@
 # MASSA Algorithm
 MASSA Algorithm: A tool for separating data sets of molecules into training and test sets. Developed with the objective of preparing data sets for the generation of prediction models in cheminformatics.
 
+
+## Version 1.0.0
+Version 1.0.0 includes a code refactoring and adds the ability to split data into training, test, and validation subsets.
+
 ## Instalation
 MASSA Algorithm can be installed using pip:
 ```
@@ -25,6 +29,8 @@ python setup.py install
 * scipy: >= 1.6;
 * scikit-learn: > 0.24;
 * kmodes:¹ >= 0.10.
+Newer versions of the packages may also work, but they need to be tested.
+    NOTE: Also tested on: scikit-learn: 1.7.0, scipy: 1.16.1, numpy: 2.0.2, rdkit: 2025.03.5.
 
 ## Usage
 Once installed, the program can be run directly from the command line:
@@ -44,6 +50,11 @@ Required arguments:
     * It is highly recommended to use an .sdf file to avoid errors.
 
 Optional arguments include:
+* **Splitting strategy**: ```-y``` or ```--splitting_strategy```.
+    * Defines the splitting strategy, either into training and test sets or into training, test, and validation sets.
+    * Options = 'tt', 'tt-val'.
+    * 'tt', means splitting into training and test sets. 'tt-val', means splitting into training, test, and validation sets.
+    * Default = 'tt'.
 * **Percentage of molecules in training set**: ```-p``` or ```--percentage_of_training```.
     * Percentage of molecules in training set. Must be a number from 0 to 1.
     * Default = 0.8.
@@ -64,6 +75,10 @@ Optional arguments include:
 * **SVD solver parameter for PCA**: ```-v``` or ```--svd_solver_for_PCA```.
     * See the sklearn.decomposition.PCA topic on https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html for more info.
     * Default = full.
+* **HCA linkage method**: ```-l``` or ```--linkage_method```.
+    * The linkage criterion to use. The algorithm will merge the pairs of cluster that minimize this criterion.
+    * Options = complete, single, ward, average, weighted, centroid, median. For more info, see the scipy.cluster.hierarchy.linkage topic on https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html?highlight=linkage#scipy.cluster.hierarchy.linkage.
+    * Default = complete.
 * **Extension of image files**: ```-t``` or ```--image_type```.
     * Extension of the image files that will be generated. Suggested = png or svg.
     * Default = png.
@@ -73,10 +88,6 @@ Optional arguments include:
 * **Font size for X-axis of bar plots**: ```-x``` or ```--barplot_Xfont_size```.
     * Sets the font size on the x-axis of the bar plot (cluster labels).
     * Default = 12.
-* **HCA linkage method**: ```-l``` or ```--linkage_method```.
-    * The linkage criterion to use. The algorithm will merge the pairs of cluster that minimize this criterion.
-    * Options = complete, single, ward, average, weighted, centroid, median. For more info, see the scipy.cluster.hierarchy.linkage topic on https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html?highlight=linkage#scipy.cluster.hierarchy.linkage.
-    * Default = complete.
 * **Enable Dendrogram plot**: ```-f``` or ```--dendrogram_plot```.
     * Defines whether or not dendrogram images will be generated.
 	* Options = true (dendrogram will be generated), false (dendrogram will not be generated).
