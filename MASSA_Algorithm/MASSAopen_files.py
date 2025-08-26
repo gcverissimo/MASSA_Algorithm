@@ -79,12 +79,12 @@ def find_name_column(columns):
             return name_column
 
 
-def read_df_smiles(df, WriteLog):
+def read_df_smiles(df, write_log, drop_errors):
     """Reads an dataframe and returns a sanitized molecule supplier.
 
     Args:
         df_supplier (pd.DataFrame): pd.DataFrame object with SMILES.
-        WriteLog (file object): Log file object to write error messages.
+        write_log (file object): Log file object to write error messages.
 
     Returns:
         AllChem.SDMolSupplier like: Sanitized molecule supplier.
@@ -118,33 +118,38 @@ def read_df_smiles(df, WriteLog):
                            f"Molecule name: {mol_of_error}].")
             composed = precomposed+'\n'
             print(precomposed)
-            WriteLog.write(composed)
+            write_log.write(composed)
     if None in mols:
-        print("ERROR: Error while reading molecules. "
-              "Check the log.txt file for more information."
-              "\nERROR: Closing...")
-        exit()
+        if drop_errors == False:
+            print("ERROR: Error while reading molecules. "
+                  "Check the log.txt file for more information."
+                  "\nERROR: Closing...")
+            exit()
+        else:
+            print("ERROR: Error while reading molecules. "
+                  "Check the log.txt file for more information.")
+            mols = [x for x in mols if x is not None]
     return mols
 
 
-def read_EXCEL_smiles(file, WriteLog):
+def read_EXCEL_smiles(file, write_log):
     df_supplier = pd.read_excel(file)
-    mols_sanitized = read_df_smiles(df_supplier, WriteLog)
+    mols_sanitized = read_df_smiles(df_supplier, write_log, drop_errors)
     return mols_sanitized
 
 
-def read_CSV_smiles(file, WriteLog):
+def read_CSV_smiles(file, write_log):
     df_supplier = pd.read_csv(file, sep=",")
-    mols_sanitized = read_df_smiles(df_supplier, WriteLog)
+    mols_sanitized = read_df_smiles(df_supplier, write_log, drop_errors)
     return mols_sanitized
 
 
-def read_SDF(file, WriteLog):
+def read_SDF(file, write_log, drop_errors):
     """Reads an SDF file and returns a sanitized molecule supplier.
 
     Args:
         file (str): Path to the SDF file.
-        WriteLog (file object): Log file object to write error messages.
+        write_log (file object): Log file object to write error messages.
 
     Returns:
         AllChem.SDMolSupplier: Sanitized molecule supplier.
@@ -154,7 +159,8 @@ def read_SDF(file, WriteLog):
     mols = []
     for mol in mols_supplier:
         try:
-            mols.append(AllChem.rdmolops.SanitizeMol(mol))
+            AllChem.rdmolops.SanitizeMol(mol)
+            mols.append(mol)
         except Exception as e:
             mols.append(None)
             mol_of_error = str(mol.GetProp('_Name'))
@@ -163,21 +169,25 @@ def read_SDF(file, WriteLog):
                            f"Molecule name: {mol_of_error}].")
             composed = precomposed+'\n'
             print(precomposed)
-            WriteLog.write(composed)
+            write_log.write(composed)
     if None in mols:
-        print("ERROR: Error while reading molecules. "
-              "Check the log.txt file for more information."
-              "\nERROR: Closing...")
-        exit()
-    mols_sanitized = AllChem.SDMolSupplier(file, sanitize=True)
-    return mols_sanitized
+        if drop_errors == False:
+            print("ERROR: Error while reading molecules. "
+                  "Check the log.txt file for more information."
+                  "\nERROR: Closing...")
+            exit()
+        else:
+            print("ERROR: Error while reading molecules. "
+                  "Check the log.txt file for more information.")
+            mols = [x for x in mols if x is not None]
+    return mols
 
 
 def remove_comment_line(data):
     # Remove lines starting with '#'
     return '\n'.join(
         line for line in data.splitlines() if not line.strip().startswith('#')
-        )
+    )
 
 
 def mol2_properties(data):
@@ -192,13 +202,13 @@ def mol2_properties(data):
     return properties
 
 
-def read_MOL2(file, WriteLog):
+def read_MOL2(file, write_log, drop_errors):
     """Reads an MOL2 file from Discovery Studio
        and returns a sanitized molecule supplier.
 
     Args:
         file (str): Path to the MOL2 file.
-        WriteLog (file object): Log file object to write error messages.
+        write_log (file object): Log file object to write error messages.
 
     Returns:
         AllChem.SDMolSupplier like: Sanitized molecule supplier.
@@ -251,24 +261,29 @@ Value_of_the_property (e.g., 8.100000)
                                f"Molecule name: {mol_of_error}].")
                 composed = precomposed+'\n'
                 print(precomposed)
-                WriteLog.write(composed)
+                write_log.write(composed)
     if None in mols:
-        print("ERROR: Error while reading molecules. "
-              "Check the log.txt file for more information."
-              "\nERROR: Closing...")
-        exit()
+        if drop_errors == False:
+            print("ERROR: Error while reading molecules. "
+                  "Check the log.txt file for more information."
+                  "\nERROR: Closing...")
+            exit()
+        else:
+            print("ERROR: Error while reading molecules. "
+                  "Check the log.txt file for more information.")
+            mols = [x for x in mols if x is not None]
     return mols
 
 
-def read_molecules(file, WriteLog):
+def read_molecules(file, write_log, drop_errors):
     if file.endswith(".mol2"):
-        molecules = read_MOL2(file, WriteLog)
+        molecules = read_MOL2(file, write_log, drop_errors)
     elif file.endswith(".sdf") or file.endswith(".mol"):
-        molecules = read_SDF(file, WriteLog)
+        molecules = read_SDF(file, write_log, drop_errors)
     elif file.endswith(".xlsx") or file.endswith(".xls"):
-        molecules = read_EXCEL_smiles(file, WriteLog)
+        molecules = read_EXCEL_smiles(file, write_log)
     elif file.endswith(".csv"):
-        molecules = read_CSV_smiles(file, WriteLog)
+        molecules = read_CSV_smiles(file, write_log)
     return molecules
 
 
