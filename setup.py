@@ -5,7 +5,7 @@ with open('README.md', 'r') as readme:
 
 setuptools.setup(
     name='MASSA Algorithm',
-    version='1.0.0',
+    version='2.0.0',
     description='MASSA Algorithm is a Python package to separate data sets of molecules into training and test sets, considering the diversity of structural, physicochemical and biological characteristics of these molecules.',
     long_description=long_description,
     long_description_content_type='text/markdown',

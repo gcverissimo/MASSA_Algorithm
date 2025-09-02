@@ -41,6 +41,8 @@ def output_mols(dataframe, file_output):
 
     # Add the properties to molecules from the name:molecule dictionary:
     for i in dict_molecules.keys():
+        name = dict_molecules[i].GetProp('_Name')
+        dict_molecules[i].SetProp("_Name", name)
         dict_molecules[i].SetProp('Set', str(dict_set[i]))
         dict_molecules[i].SetProp('HBA count', str(dic_hba[i]))
         dict_molecules[i].SetProp('HBD count', str(dic_hbd[i]))

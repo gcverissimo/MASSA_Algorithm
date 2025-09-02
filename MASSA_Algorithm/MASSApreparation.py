@@ -46,16 +46,13 @@ def pca_maker(file, nPCS, svd_parameter):
 def organize_df_clusterization(file, HCAdict, ident):
     if ident == 'all':
         file['Cluster_General'] = pd.Series(HCAdict)
-        return file
     elif ident == 'bio':
         file['Cluster_Biological'] = pd.Series(HCAdict)
-        return file
     elif ident == 'PhCh':
         file['Cluster_Physicochemical'] = pd.Series(HCAdict)
-        return file
     else:
         file['Cluster_Structural'] = pd.Series(HCAdict)
-        return file
+    return file
 
 
 # Create a matrix with cluster identifications for each of the three domains, in order to prepare for Kmodes.

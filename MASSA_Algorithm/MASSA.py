@@ -8,6 +8,7 @@ from MASSA_Algorithm import MASSApreparation
 from MASSA_Algorithm import MASSAcluster
 from MASSA_Algorithm import MASSAsplit
 from MASSA_Algorithm import MASSAmoloutput
+import time
 
 
 def returns_zero(total, test, validation):
@@ -51,7 +52,7 @@ def main():
     # Initializing from the command line.
     # Print the program logo:
     MASSAlogos.initial_print()
-
+    start_time = time.time()
     # It captures command line arguments.
     (file_input,
      file_output,
@@ -67,7 +68,8 @@ def main():
      linkage_method,
      flag_dendrogram,
      splitting_strategy,
-     drop_errors) = MASSAargs.capture_args()
+     drop_errors,
+     large_library) = MASSAargs.capture_args()
     print('Initializing, wait...\n')
 
     # Create log.txt file in directory:
@@ -75,10 +77,23 @@ def main():
     writelog = open(arqlog, 'w')
 
     # Initial file management:
-    # It creates the output directories.
-    MASSAod.output_directory(directoryfile_output)
     # Read molecules.
     mols = MASSAopen_files.read_molecules(file_input, writelog, drop_errors)
+
+    # If auto detection is enable to select the initial cluster algorithm.
+    if large_library == 'auto':
+        if int(len(mols)) > 9999:
+            large_library = True
+        else:
+            large_library = False
+
+    if large_library == True:
+        # Deactivates the HCA dendrogram.
+        flag_dendrogram = False
+
+    # It creates the output directories.
+    MASSAod.output_directory(directoryfile_output, flag_dendrogram)
+
     # Extracting the property names from the ".sdf" input file.
     sdf_property_names = MASSAopen_files.get_sdf_property_names(mols)
     # Structure 3D management - It adds hydrogens keeping 3D coordenates.
@@ -87,6 +102,7 @@ def main():
     # Extraction properties from ".sdf":
     # It extracts the names of the molecules and creates a name:molecule dictionary and a dataframe.
     names, dataframe = MASSAextraction.name_extraction(mols_h)
+    
     # It defines a list of what biological activities are being extracted.
     biological_activity = MASSAextraction.the_biological_handler(
         sdf_property_names, number_bioact, bioactivities_as_args)
@@ -112,16 +128,28 @@ def main():
     # PCA for the structural domain.
     fp_pca = MASSApreparation.pca_maker(fp_matrix, npcs, svd_parameter)
 
-    # First clustering (HCA):
-    # It performs HCA clustering without generating the dendrogram for the biological domain.
-    leaves_cluster_bio, bio_hca, linkage_bio, cutoff_bio = MASSAcluster.hca_clusters(
-        bio_pca, names, 'bio', directoryfile_output, extension_type, linkage_method)
-    # It performs HCA clustering without generating the dendrogram for the physicochemical domain.
-    leaves_cluster_phch, phch_hca, linkage_phch, cutoff_phch = MASSAcluster.hca_clusters(
-        phch_pca, names, 'PhCh', directoryfile_output, extension_type, linkage_method)
-    # It performs HCA clustering without generating the dendrogram for the structural domain.
-    leaves_cluster_fp, fp_hca, linkage_fp, cutoff_fp = MASSAcluster.hca_clusters(
-        fp_pca, names, 'FP', directoryfile_output, extension_type, linkage_method)
+    if large_library == True:
+        # First clustering (MiniBatch-KMeans):
+        # It performs KMeans clustering for the biological domain.
+        bio_hca = MASSAcluster.kmeans_clusters(
+            bio_pca, names, 'bio', directoryfile_output, extension_type)
+        # It performs KMeans clustering for the physicochemical domain.
+        phch_hca = MASSAcluster.kmeans_clusters(
+            phch_pca, names, 'PhCh', directoryfile_output, extension_type)
+        # It performs KMeans clustering for the structural domain.
+        fp_hca = MASSAcluster.kmeans_clusters(
+            fp_pca, names, 'FP', directoryfile_output, extension_type)
+    else:
+        # First clustering (HCA):
+        # It performs HCA clustering without generating the dendrogram for the biological domain.
+        leaves_cluster_bio, bio_hca, linkage_bio, cutoff_bio = MASSAcluster.hca_clusters(
+            bio_pca, names, 'bio', directoryfile_output, extension_type, linkage_method)
+        # It performs HCA clustering without generating the dendrogram for the physicochemical domain.
+        leaves_cluster_phch, phch_hca, linkage_phch, cutoff_phch = MASSAcluster.hca_clusters(
+            phch_pca, names, 'PhCh', directoryfile_output, extension_type, linkage_method)
+        # It performs HCA clustering without generating the dendrogram for the structural domain.
+        leaves_cluster_fp, fp_hca, linkage_fp, cutoff_fp = MASSAcluster.hca_clusters(
+            fp_pca, names, 'FP', directoryfile_output, extension_type, linkage_method)
 
     # It adds the biological cluster identification to the spreadsheet.
     dataframe = MASSApreparation.organize_df_clusterization(
@@ -137,7 +165,8 @@ def main():
     # It creates a matrix with cluster identifications for each of the three domains for Kmodes.
     matrix_for_kmodes = MASSApreparation.organize_for_kmodes(dataframe)
     # It performs Kmodes clustering for the general domain.
-    all_hca = MASSAcluster.kmodes_clusters(matrix_for_kmodes, names)
+    all_hca = MASSAcluster.kmodes_clusters(matrix_for_kmodes, names,
+                                           directoryfile_output, extension_type)
     # It adds the general cluster identification to the spreadsheet.
     dataframe = MASSApreparation.organize_df_clusterization(
         dataframe, all_hca, 'all')
@@ -259,7 +288,10 @@ def main():
         all_test, all_val, splitting_strategy,
         writelog
     )
-    writelog.close()
+
+    # Output management:
+    # It adds, for each molecule, the values of the calculated properties, the identifications of each cluster and which set the molecule belongs to.
+    MASSAmoloutput.output_mols(dataframe, file_output)
 
     # Plot HCAs:
     if flag_dendrogram == True:
@@ -280,7 +312,8 @@ def main():
             extension_type, dendrogram_xfont_size, test_or_val_molecules
         )  # fp_Plot: Plot the HCA dendrogram
 
-    # Output management:
-    # It adds, for each molecule, the values of the calculated properties, the identifications of each cluster and which set the molecule belongs to.
-    MASSAmoloutput.output_mols(dataframe, file_output)
-    print('Completed')
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    writelog.write(f'Completed! Elapsed time = {elapsed_time} s.')
+    writelog.close()
+    print(f'Completed! Elapsed time = {elapsed_time} s.')
