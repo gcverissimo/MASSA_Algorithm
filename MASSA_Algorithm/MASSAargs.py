@@ -26,7 +26,7 @@ def capture_args():
             '[-n <number_of_principal_components>] [-v <svd_parameter>] [-l <linkage_method] '
             '[-t <extension_for_images>] [-d <dendrogram_font_size_on_Xaxis>] '
             '[-x <frequency_bar_plot_font_size_on_Xaxis>] [-f <toggle_dendrogram>] '
-            '[-e <drop_molecules_with_errors]'
+            '[-e <drop_molecules_with_errors] [-a <large_dataset>]'
         )
     )
     required = parser.add_argument_group('required arguments')
@@ -120,9 +120,17 @@ def capture_args():
                                 )
                           )
     optional.add_argument('-e', '--drop_errors', type=str, choices=['true', 'false'],
-                          metavar='DROP_MOLECULES_WITH_ERRORS', default='false', help=(
+                          metavar='DROP_MOLECULES_WITH_ERRORS', default='true', help=(
                           'Ignore chemistry errors, saving only molecules without any errors. '
-                          'Default = \'false\'.'
+                          'False will treat molecule errors as fatal and fail the execution. '
+                          'Default = \'true\'.'
+                          ))
+    optional.add_argument('-a', '--large_dataset', type=str, choices=['auto', 'true', 'false'],
+                          metavar='LARGE_DATASET', default='auto', help=(
+                          'Switch the MASSA algorithm from HCA to KMeans to handle large datasets. '
+                          'Options = auto (switches to KMeans if ≥ 10,000 molecules),  '
+                          'false = use HCA (for smaller datasets), '
+                          'true = use KMeans (for large datasets).'
                           ))
     args = parser.parse_args()
 
@@ -153,6 +161,12 @@ def capture_args():
     flag_strategy = str(args.splitting_strategy).lower()
     # It captures whether or not to ignore chemistry errors.
     drop = str(args.drop_errors).lower()
+    # It captures whether or not is handling with a large dataset.
+    large_dataset = str(args.large_dataset).lower()
+    if large_dataset == 'true':
+        large_dataset = True
+    elif large_dataset == 'false':
+        large_dataset = False
 
     if args.the_biological_activities != None:
         # It creates a list with the names of the biological activities to be searched for.
@@ -210,5 +224,6 @@ def capture_args():
         linkage_method,
         flag_dendrogram,
         flag_strategy,
-        drop
+        drop,
+        large_dataset
     )
