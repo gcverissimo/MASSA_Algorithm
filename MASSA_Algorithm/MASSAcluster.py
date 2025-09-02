@@ -3,6 +3,9 @@ from matplotlib import pyplot as plt
 from matplotlib import colors as colrs
 import scipy.cluster.hierarchy as sch
 from kmodes import kmodes
+from sklearn.cluster import MiniBatchKMeans as KMeans
+from multiprocessing import cpu_count as mpi_count
+from scipy.spatial.distance import cdist
 
 
 def numerical_number_of_clusters(distances_list):
@@ -26,12 +29,15 @@ def numerical_number_of_clusters(distances_list):
     return distances.index(max(distances)) + 1
 
 
-def categorical_number_of_clusters(file):
+def categorical_number_of_clusters(file, directory_fileoutput, extension_type):
     # Elbow method using the clustering cost:
     list_clus_costs = []
-    for n in range(2, 21):  # Calculate the cost for each n cluster.
+    maxcluster = 31
+    ran_curve = [x for x in range(2, maxcluster, 2)]
+    for n in range(2, maxcluster):  # Calculate the cost for each n cluster.
         km = kmodes.KModes(n_clusters=n, verbose=0,
-                           n_init=20, init='Cao', max_iter=300)
+                           n_init=20, init='Cao',
+                           n_jobs=-1, max_iter=300)
         km.fit(X=file)
         # Costs = Clustering cost, defined as the sum distance of all points
         # to their respective cluster centroids.
@@ -39,10 +45,10 @@ def categorical_number_of_clusters(file):
     # Define the x-axis coordinates of the first and last points on the line.
     x1, y1 = 2, list_clus_costs[0]
     # Define the y-axis coordinates of the first and last points on the line.
-    x2, y2 = 20, list_clus_costs[len(list_clus_costs)-1]
+    x2, y2 = 20, list_clus_costs[18]
 
     distances = []
-    for i in range(len(list_clus_costs)):
+    for i in range(19):
         # Coordinate on the x-axis of the point to calculate the distance to the line.
         x0 = i+2
         # Coordinate on the y-axis of the point to calculate the distance to the line.
@@ -51,7 +57,52 @@ def categorical_number_of_clusters(file):
         denominator = ((y2 - y1)**2 + (x2 - x1)**2)**(1/2)
         # Distance between a point and a line.
         distances.append(numerator/denominator)
-    return (distances.index(max(distances)) + 2)
+    number_of_clusters = (distances.index(max(distances)) + 2)
+    ident = "all"
+    plot_distortion(
+        list_clus_costs, directory_fileoutput,
+        ident, extension_type, number_of_clusters,
+        ran_curve)
+    return number_of_clusters
+
+
+def kmeans_number_of_clusters(file, ident, directory_fileoutput, extension_type):
+    # Elbow method using the clustering cost:
+    list_clus_costs = []
+    maxcluster = 31
+    ran_curve = [x for x in range(2, maxcluster, 2)]
+    for n in range(2, maxcluster):  # Calculate the cost for each n cluster.
+        km = KMeans(n_clusters=n, verbose=0,
+                    init='k-means++', max_iter=300,
+                    batch_size=256*int(mpi_count()),
+                    compute_labels=True, random_state=2025)
+        km.fit(X=file)
+        # Costs = Clustering cost, defined as the sum distance of all points
+        # to their respective cluster centroids.
+        list_clus_costs.append(
+            np.sum(np.min(cdist(file, km.cluster_centers_, 'euclidean'), axis=1)**2) / file.shape[0])
+    # Define the x-axis coordinates of the first and last points on the line.
+    x1, y1 = 2, list_clus_costs[0]
+    # Define the y-axis coordinates of the first and last points on the line.
+    x2, y2 = 20, list_clus_costs[18]
+
+    distances = []
+    for i in range(19):
+        # Coordinate on the x-axis of the point to calculate the distance to the line.
+        x0 = i+2
+        # Coordinate on the y-axis of the point to calculate the distance to the line.
+        y0 = list_clus_costs[i]
+        numerator = abs((y2-y1)*x0 - (x2-x1)*y0 + x2*y1 - y2*x1)
+        denominator = ((y2 - y1)**2 + (x2 - x1)**2)**(1/2)
+        # Distance between a point and a line.
+        distances.append(numerator/denominator)
+
+    number_of_clusters = (distances.index(max(distances)) + 2)
+    plot_distortion(
+        list_clus_costs, directory_fileoutput,
+        ident, extension_type, number_of_clusters,
+        ran_curve)
+    return number_of_clusters
 
 
 def optimal_threshold(file, ident, directory_fileoutput, extension_type, linkage):
@@ -69,7 +120,7 @@ def optimal_threshold(file, ident, directory_fileoutput, extension_type, linkage
     if ident == 'bio':
         # Define the name, directory and extension of the Euclidean distance graph.
         name_euc_dist_file = directory_fileoutput + \
-            '/Images/Distance_HCA_Images/Dist_HCA_biological.'+extension_type
+            'Images/Distance_Images/Dist_HCA_biological.'+extension_type
         title_distances = 'Plot of Euclidean Distances from Biological HCA'
         print('Number of clusters:')
         # Print the number of clusters for the biological domain.
@@ -80,7 +131,7 @@ def optimal_threshold(file, ident, directory_fileoutput, extension_type, linkage
     elif ident == 'PhCh':
         # Define the name, directory and extension of the Euclidean distance graph.
         name_euc_dist_file = directory_fileoutput + \
-            '/Images/Distance_HCA_Images/Dist_HCA_physicochemical.'+extension_type
+            'Images/Distance_Images/Dist_HCA_physicochemical.'+extension_type
         title_distances = 'Plot of Euclidean Distances from Physicochemical HCA'
         # Print the number of clusters for the physicochemical domain.
         print('Physicochemical:', number_of_clusters)
@@ -90,7 +141,7 @@ def optimal_threshold(file, ident, directory_fileoutput, extension_type, linkage
     else:
         # Define the name, directory and extension of the Euclidean distance graph.
         name_euc_dist_file = directory_fileoutput + \
-            '/Images/Distance_HCA_Images/Dist_HCA_structural.'+extension_type
+            'Images/Distance_Images/Dist_HCA_structural.'+extension_type
         title_distances = 'Plot of Euclidean Distances from Structural HCA'
         # Print the number of clusters for the structural domain.
         print('Structural:', number_of_clusters)
@@ -279,24 +330,24 @@ def hca_plot(
     if ident == 'bio':
         plt.title('HCA of biological activity')
         plt.savefig(directory_fileoutput +
-                    '/Images/Dendrogram_HCA_Images/HCA_biological.'+extension_type)
+                    'Images/Dendrogram_HCA_Images/HCA_biological.'+extension_type)
         plt.close()
     elif ident == 'PhCh':
         plt.title('HCA of physicochemical properties')
         plt.savefig(directory_fileoutput +
-                    '/Images/Dendrogram_HCA_Images/HCA_physicochemical.'+extension_type)
+                    'Images/Dendrogram_HCA_Images/HCA_physicochemical.'+extension_type)
         plt.close()
     else:
         plt.title('HCA of AtomPairs fingerprint')
         plt.savefig(directory_fileoutput +
-                    '/Images/Dendrogram_HCA_Images/HCA_structural.'+extension_type)
+                    'Images/Dendrogram_HCA_Images/HCA_structural.'+extension_type)
         plt.close()
 
 
-def kmodes_clusters(file, names):
+def kmodes_clusters(file, names, directory_fileoutput, extension_type):
     # Calculate the number of clusters for the Kmodes:
-    n_clusters = categorical_number_of_clusters(file)
-    print('General:', n_clusters)  # Print the number of clusters.
+    n_clusters = categorical_number_of_clusters(
+        file, directory_fileoutput, extension_type)
 
     # Run Kmodes with the calculated number of clusters:
     # Parameter setting.
@@ -311,3 +362,114 @@ def kmodes_clusters(file, names):
     for i, a in zip(names, clusters_list):
         HCA_General_dict[i] = int(a+1)
     return HCA_General_dict
+
+
+def plot_distortion(
+        list_clus_costs, directory_fileoutput,
+        ident, extension_type, number_of_clusters,
+        ran_curve):
+    plt.plot(
+        list(range(2, len(list_clus_costs)+2)),
+        list_clus_costs, '-o',
+        color='black',
+        markersize=4, linewidth=1,
+        markeredgewidth=1
+    )  # Initial setting of graph values and parameters.
+    if ident == 'bio':
+        # Define the name, directory and extension of the Distortion graph.
+        name_euc_dist_file = directory_fileoutput + \
+            'Images/Distance_Images/Distortion_biological.'+extension_type
+        title_distances = 'Plot of Distortion from Biological Space'
+        print('Number of clusters:')
+        # Print the number of clusters for the biological domain.
+        print('Biological:', number_of_clusters)
+        plt.ylabel('KMeans Distortion')  # Set the y-axis label.
+    elif ident == 'PhCh':
+        # Define the name, directory and extension of the Distortion graph.
+        name_euc_dist_file = directory_fileoutput + \
+            'Images/Distance_Images/Distortion_physicochemical.'+extension_type
+        title_distances = 'Plot of Distortion from Physicochemical Space'
+        # Print the number of clusters for the physicochemical domain.
+        print('Physicochemical:', number_of_clusters)
+        plt.ylabel('KMeans Distortion')  # Set the y-axis label.
+    elif ident == 'FP':
+        # Define the name, directory and extension of the Distortion graph.
+        name_euc_dist_file = directory_fileoutput + \
+            'Images/Distance_Images/Distortion_structural.'+extension_type
+        title_distances = 'Plot of Distortion from Structural Space'
+        # Print the number of clusters for the structural domain.
+        print('Structural:', number_of_clusters)
+        plt.ylabel('KMeans Distortion')  # Set the y-axis label.
+    else:
+        # Define the name, directory and extension of the Distortion graph.
+        name_euc_dist_file = directory_fileoutput + \
+            'Images/Distance_Images/Cost_general.'+extension_type
+        title_distances = 'Cost Plot from General (KModes)'
+        # Print the number of clusters for the structural domain.
+        print('General:', number_of_clusters)
+        plt.ylabel('KModes Cost')  # Set the y-axis label.
+    plt.title(title_distances)  # Define the graph title.
+    plt.xticks(ran_curve)  # Define the x-axis ticks.
+    plt.savefig(name_euc_dist_file)  # Save figure.
+    plt.close()  # Close plot.
+
+
+def kmeans_number_of_clusters(file, ident, directory_fileoutput, extension_type):
+    # Elbow method using the clustering cost:
+    list_clus_costs = []
+    maxcluster = 31
+    ran_curve = [x for x in range(2, maxcluster, 2)]
+    for n in range(2, maxcluster):  # Calculate the cost for each n cluster.
+        km = KMeans(n_clusters=n, verbose=0,
+                    init='k-means++', max_iter=300,
+                    batch_size=256*int(mpi_count()),
+                    compute_labels=True, random_state=2025)
+        km.fit(X=file)
+        # Costs = Clustering cost, defined as the sum distance of all points
+        # to their respective cluster centroids.
+        list_clus_costs.append(
+            np.sum(np.min(cdist(file, km.cluster_centers_, 'euclidean'), axis=1)**2) / file.shape[0])
+    # Define the x-axis coordinates of the first and last points on the line.
+    x1, y1 = 2, list_clus_costs[0]
+    # Define the y-axis coordinates of the first and last points on the line.
+    x2, y2 = 20, list_clus_costs[18]
+
+    distances = []
+    for i in range(19):
+        # Coordinate on the x-axis of the point to calculate the distance to the line.
+        x0 = i+2
+        # Coordinate on the y-axis of the point to calculate the distance to the line.
+        y0 = list_clus_costs[i]
+        numerator = abs((y2-y1)*x0 - (x2-x1)*y0 + x2*y1 - y2*x1)
+        denominator = ((y2 - y1)**2 + (x2 - x1)**2)**(1/2)
+        # Distance between a point and a line.
+        distances.append(numerator/denominator)
+
+    number_of_clusters = (distances.index(max(distances)) + 2)
+    plot_distortion(
+        list_clus_costs, directory_fileoutput,
+        ident, extension_type, number_of_clusters,
+        ran_curve)
+    return number_of_clusters
+
+
+def kmeans_clusters(file, names, ident, directory_fileoutput, extension_type):
+    # Calculate the number of clusters for the Kmodes:
+    n_clusters = kmeans_number_of_clusters(
+        file, ident, directory_fileoutput, extension_type)
+
+    # Run Kmodes with the calculated number of clusters:
+    # Parameter setting.
+    km = KMeans(n_clusters=n_clusters, verbose=0,
+                init='k-means++', max_iter=300,
+                batch_size=256*int(mpi_count()),
+                compute_labels=True, random_state=2025)
+    # Run Kmodes for the dataset and return an array with cluster labels for each molecule.
+    clusters = km.fit_predict(file)
+    clusters_list = list(clusters)  # Transform np.array into a list.
+
+    # Create a dictionary with the pair "molecule name": "General cluster ID":
+    kmeans_cluster_dict = {}
+    for i, a in zip(names, clusters_list):
+        kmeans_cluster_dict[i] = int(a+1)
+    return kmeans_cluster_dict

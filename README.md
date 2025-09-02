@@ -3,7 +3,16 @@ MASSA Algorithm: A tool for separating data sets of molecules into training and 
 
 
 ## Version 1.0.0
-Version 1.0.0 includes a code refactoring and adds the ability to split data into training, test, and validation subsets.
+- Version 1.0.0 includes a code refactoring and adds the ability to split data into training, test, and validation subsets.
+
+## Version 2.0.0
+- Version 2.0.0 introduces algorithm changes to better handle large datasets. Specifically, for datasets with 10,000 molecules or more, Hierarchical Clustering Analysis (HCA) is automatically replaced by MiniBatch K-Means. This is the new default behavior, but it can be controlled using the flag -a / --large-datasets. Since dendrograms are generated from HCA, dendrogram plotting is disabled for large datasets. In such cases, the flag -f / --dendrogram-plot is automatically disabled, regardless of user input.
+
+- This version introduces the ability to call the MASSA Algorithm from any Python script using MASSA_Algorithm.pyMASSA.py_massa(). However, instructions and documentation for doing so will be provided in future updates.
+
+- Version 2.0.0 also addresses the "NaN/None values in y" error, which was caused by duplicate molecule names. In this version, molecules with identical names are detected and renamed by appending their original index as a suffix to ensure uniqueness.
+
+- MASSA now preserves the input order of molecules in its output. However, molecules with chemical errors are skipped and excluded from the process. 
 
 ## Instalation
 MASSA Algorithm can be installed using pip:
@@ -96,6 +105,10 @@ Optional arguments include:
     * Ignore chemistry errors, saving only molecules without any errors.
 	* Options = true (ignore molecule errors and log them in the log file), false (treat molecule errors as fatal and fail the execution).
     * Default = false.
+* **Large Dataset**: ```-a``` or ```--large_dataset```.
+    * Switch the MASSA algorithm from HCA to MiniBatch-KMeans to handle large datasets.
+    * Options = auto (switches to KMeans if ≥ 10,000 molecules), false = use HCA (for smaller datasets), true = use KMeans (for large datasets).
+    * Default = auto.
 
 #### Command line help
 A full description of the arguments can also be viewed directly from the command line using the command:

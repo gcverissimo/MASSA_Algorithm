@@ -94,7 +94,6 @@ def read_df_smiles(df, write_log, drop_errors):
     smi_name_column = find_smiles_column(columns)
     name_name_column = find_name_column(columns)
 
-    # name_name_column = "index"
     columns.remove(smi_name_column)
     columns.remove(name_name_column)
 
@@ -290,9 +289,9 @@ def read_molecules(file, write_log, drop_errors):
 def hydrogen_add(file):
     molsH = []
     for i in file:
+        # Add hydrogens keeping 3D coordenates.
         i = AllChem.AddHs(i, addCoords=True)
         molsH.append(i)
-        # Add hydrogens keeping 3D coordenates.
     return molsH
 
 

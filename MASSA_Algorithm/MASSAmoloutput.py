@@ -1,7 +1,7 @@
 from rdkit.Chem import AllChem
 
 
-def output_mols(dataframe, file_output):
+def output_mols(dataframe):
     """
     For each molecule, adds the values of the calculated properties,
     the identifications of each cluster and which set the molecule belongs to.
@@ -9,7 +9,6 @@ def output_mols(dataframe, file_output):
 
     Args:
         dataframe (pd.DataFrame): The dataframe of molecules.
-        file_output (str): The path to the output file.
     """
     # Creation of dictionaries with the name of the molecule:
     dict_molecules = dict(
@@ -41,6 +40,8 @@ def output_mols(dataframe, file_output):
 
     # Add the properties to molecules from the name:molecule dictionary:
     for i in dict_molecules.keys():
+        name = dict_molecules[i].GetProp('_Name')
+        dict_molecules[i].SetProp("_Name", name)
         dict_molecules[i].SetProp('Set', str(dict_set[i]))
         dict_molecules[i].SetProp('HBA count', str(dic_hba[i]))
         dict_molecules[i].SetProp('HBD count', str(dic_hbd[i]))
@@ -62,9 +63,27 @@ def output_mols(dataframe, file_output):
 
     # Create a dict_values with just the molecules
     # (the name of the molecule is already part of molecule object):
-    output_mols = dict_molecules.values()
+    out_mols = list(dict_molecules.values())
+    return out_mols
+
+
+def output_file_mols(dataframe, file_output):
+    """
+    For each molecule, adds the values of the calculated properties,
+    the identifications of each cluster and which set the molecule belongs to.
+    Also, it creates the final output .sdf file.
+
+    Args:
+        dataframe (pd.DataFrame): The dataframe of molecules.
+        file_output (str): The path to the output file.
+    """
+
+    # Recovers a list with just the molecules
+    # (the name of the molecule is already part of molecule object):
+    out_mols = output_mols(dataframe)
 
     # Create output ".sdf" file:
     with AllChem.SDWriter(file_output) as w:
-        for m in output_mols:
+        for m in out_mols:
             w.write(m)
+    return out_mols
