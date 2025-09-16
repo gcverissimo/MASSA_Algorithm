@@ -50,33 +50,33 @@ def find_name_column(columns):
     Returns:
         column_name (str): returns the name of the molecule name column.
     """
-
+    name_column = ""
     for column in columns:
         if "molecule name" == column.lower():
             print((f"Found '{column}' column."
                    " Using it to name the molecules."))
             name_column = column
-            return name_column
+            break
         elif "name" == column.lower():
             print((f"Found '{column}' column."
                    " Using it to name the molecules."))
             name_column = column
-            return name_column
+            break
         elif "molecule chembl id" == column.lower():
             print((f"Found '{column}' column."
                    " Using it to name the molecules."))
             name_column = column
-            return name_column
+            break
         elif "id" == column.lower():
             print((f"Found '{column}' column."
                    " Using it to name the molecules."))
             name_column = column
-            return name_column
-        else:
-            print(("Unable to find a column with molecule names."
-                   " Using the index to name the molecules."))
-            name_column = "index"
-            return name_column
+            break
+    if name_column == "":
+        print(("Unable to find a column with molecule names."
+                " Using the index to name the molecules."))
+        name_column = "index"
+    return name_column
 
 
 def read_df_smiles(df, write_log, drop_errors):
@@ -131,13 +131,13 @@ def read_df_smiles(df, write_log, drop_errors):
     return mols
 
 
-def read_EXCEL_smiles(file, write_log):
+def read_EXCEL_smiles(file, write_log, drop_errors):
     df_supplier = pd.read_excel(file)
     mols_sanitized = read_df_smiles(df_supplier, write_log, drop_errors)
     return mols_sanitized
 
 
-def read_CSV_smiles(file, write_log):
+def read_CSV_smiles(file, write_log, drop_errors):
     df_supplier = pd.read_csv(file, sep=",")
     mols_sanitized = read_df_smiles(df_supplier, write_log, drop_errors)
     return mols_sanitized
@@ -280,9 +280,9 @@ def read_molecules(file, write_log, drop_errors):
     elif file.endswith(".sdf") or file.endswith(".mol"):
         molecules = read_SDF(file, write_log, drop_errors)
     elif file.endswith(".xlsx") or file.endswith(".xls"):
-        molecules = read_EXCEL_smiles(file, write_log)
+        molecules = read_EXCEL_smiles(file, write_log, drop_errors)
     elif file.endswith(".csv"):
-        molecules = read_CSV_smiles(file, write_log)
+        molecules = read_CSV_smiles(file, write_log, drop_errors)
     return molecules
 
 

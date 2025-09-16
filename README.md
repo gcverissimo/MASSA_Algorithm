@@ -38,6 +38,7 @@ python setup.py install
 * scipy: >= 1.6;
 * scikit-learn: > 0.24;
 * kmodes:¹ >= 0.10.
+
 Newer versions of the packages may also work, but they need to be tested.
     NOTE: Also tested on: scikit-learn: 1.7.0, scipy: 1.16.1, numpy: 2.0.2, rdkit: 2025.03.5.
 
@@ -104,7 +105,7 @@ Optional arguments include:
 * **Ignore Errors**: ```-e``` or ```--drop_errors```.
     * Ignore chemistry errors, saving only molecules without any errors.
 	* Options = true (ignore molecule errors and log them in the log file), false (treat molecule errors as fatal and fail the execution).
-    * Default = false.
+    * Default = true.
 * **Large Dataset**: ```-a``` or ```--large_dataset```.
     * Switch the MASSA algorithm from HCA to MiniBatch-KMeans to handle large datasets.
     * Options = auto (switches to KMeans if ≥ 10,000 molecules), false = use HCA (for smaller datasets), true = use KMeans (for large datasets).
@@ -137,3 +138,4 @@ Veríssimo, G. C.; Panteleão, S. Q.; Fernandes, P. O.; Gertrudes, J. C.; Kronen
 
 ## References
 [1]: DE VOS, N. J. kmodes categorical clustering library. https://github.com/nicodv/kmodes. 2015-2021.
+
