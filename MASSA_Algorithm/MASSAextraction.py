@@ -5,11 +5,11 @@ from rdkit.Chem import AllChem
 def name_extraction(file):
     names = []
     dict_names = {}
-    for i in file:
+    for idx, f in enumerate(file):
         try:
-            names.append(i.GetProp('_Name'))  # Get name of molecules to a list
+            names.append(f.GetProp('_Name'))  # Get name of molecules to a list
             # Get name of molecules to a dict
-            dict_names[i.GetProp('_Name')] = i
+            dict_names[idx] = [f.GetProp('_Name'), f]
         except:
             names.append(None)
     if None in names:  # If any molecule is unnamed it returns an error.
@@ -17,8 +17,39 @@ def name_extraction(file):
         print('Closing...')
         exit()
     else:
-        dataframe = pd.DataFrame({'molecules': pd.Series(dict_names)})
-    return names, dataframe
+        # Dealing with duplicates:
+        duplicates = {}
+        for idx, value in dict_names.items():
+            name = value[0]
+            mol = value[1]
+            if name in duplicates.keys():
+                duplicates[name].append([idx, mol])
+            else:
+                duplicates[name] = [[idx, mol]]
+
+        final_names = []
+        final_names_dict = {}
+        for k, v in duplicates.items():
+            name = k
+            replicates = v
+            if len(replicates) > 1:
+                for r in replicates:
+                    index = r[0]
+                    molecule = r[1]
+                    final_key = f"{name}_idx-_{index}"
+                    molecule.SetProp("_Name", final_key)
+                    final_names_dict[final_key] = molecule
+                    final_names.append(final_key)
+            else:
+                for r in replicates:
+                    index = r[0]
+                    molecule = r[1]
+                    final_key = name
+                    molecule.SetProp("_Name", final_key)
+                    final_names_dict[final_key] = molecule
+                    final_names.append(final_key)
+        dataframe = pd.DataFrame({'molecules': pd.Series(final_names_dict)})
+    return final_names, dataframe
 
 
 def the_biological_handler(sdf_property_names, numberBioAct, BioActAsArgs):

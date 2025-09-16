@@ -19,6 +19,7 @@ def split_train_test_sets(file, training_percent, splitting_strategy):
         test_or_val_molecules: An identification of which molecules are on the validation set.
 
     """
+    file["start_index"] = range(len(file))
     if splitting_strategy == "tt":
         # Split the set of molecules into training set and test set,
         # preserving the cluster diversity of the total set according
@@ -68,6 +69,7 @@ def split_train_test_sets(file, training_percent, splitting_strategy):
         dataset = pd.concat([training, test, validation])
         # Define the output sets for the algorithm.
         test_or_val_molecules = [test_molecules, validation_molecules]
+    dataset = dataset.sort_values(by="start_index")
     return dataset, test_or_val_molecules
 
 
