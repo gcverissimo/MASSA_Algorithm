@@ -1,3 +1,4 @@
+import time
 from MASSA_Algorithm import MASSAlogos
 from MASSA_Algorithm import MASSAargs
 from MASSA_Algorithm import MASSAod
@@ -8,7 +9,8 @@ from MASSA_Algorithm import MASSApreparation
 from MASSA_Algorithm import MASSAcluster
 from MASSA_Algorithm import MASSAsplit
 from MASSA_Algorithm import MASSAmoloutput
-import time
+from joblib import parallel_backend
+
 
 
 def returns_zero(total, test, validation):
@@ -49,6 +51,7 @@ def main():
         Main subroutine, allows the program to run directly from
         the command line when installed via pip.
     """
+    parallel_backend('multiprocessing')
     # Initializing from the command line.
     # Print the program logo:
     MASSAlogos.initial_print()
