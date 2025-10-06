@@ -105,7 +105,7 @@ Optional arguments include:
 * **Ignore Errors**: ```-e``` or ```--drop_errors```.
     * Ignore chemistry errors, saving only molecules without any errors.
 	* Options = true (ignore molecule errors and log them in the log file), false (treat molecule errors as fatal and fail the execution).
-    * Default = false.
+    * Default = true.
 * **Large Dataset**: ```-a``` or ```--large_dataset```.
     * Switch the MASSA algorithm from HCA to MiniBatch-KMeans to handle large datasets.
     * Options = auto (switches to KMeans if ≥ 10,000 molecules), false = use HCA (for smaller datasets), true = use KMeans (for large datasets).
