@@ -193,12 +193,26 @@ def py_massa(
     dataframe = MASSApreparation.organize_df_clusterization(
         dataframe, fp_hca, 'FP')
 
-    # Second clustering (Kmodes):
-    # It creates a matrix with cluster identifications for each of the three domains for Kmodes.
-    matrix_for_kmodes = MASSApreparation.organize_for_kmodes(dataframe)
-    # It performs Kmodes clustering for the general domain.
-    all_hca = MASSAcluster.kmodes_clusters(matrix_for_kmodes, names,
-                                           directoryfile_output, extension_type)
+    if large_library == True:
+        # Second clustering (Mini-Batch Kmeans):
+        # It creates a matrix with cluster identifications
+        # for each of three domains for Mini-Batch Kmeans.
+        matrix_for_kmfinal = MASSApreparation.organize_for_final_clustering(
+            dataframe)
+        # It performs Kmeans clustering for the general domain.
+        all_hca = MASSAcluster.kmeans_clusters(
+            matrix_for_kmfinal, names, 'all',
+            directoryfile_output, extension_type)
+    else:
+        # Second clustering (Kmodes):
+        # It creates a matrix with cluster identifications
+        # for each of the three domains for Kmodes.
+        matrix_for_kmodes = MASSApreparation.organize_for_kmodes(dataframe)
+        # It performs Kmodes clustering for the general domain.
+        all_hca = MASSAcluster.kmodes_clusters(
+            matrix_for_kmodes, names,
+            directoryfile_output, extension_type)
+
     # It adds the general cluster identification to the spreadsheet.
     dataframe = MASSApreparation.organize_df_clusterization(
         dataframe, all_hca, 'all')
