@@ -32,15 +32,14 @@ python setup.py install
 ### Requirements
 * python: >= 3.8;
 * rdkit;
-* numpy: < 2.0;
+* numpy;
 * pandas;
 * matplotlib: >= 3.2;
 * scipy: >= 1.6;
 * scikit-learn: > 0.24;
 * kmodes:¹ >= 0.10.
 
-Newer versions of the packages may also work, but they need to be tested.
-    NOTE: Also tested on: scikit-learn: 1.7.0, scipy: 1.16.1, numpy: 2.0.2, rdkit: 2025.03.5.
+NOTE: Also tested on: scikit-learn: 1.7.0, scipy: 1.16.1, numpy: 2.0.2, rdkit: 2025.03.5.
 
 ## Usage
 Once installed, the program can be run directly from the command line:

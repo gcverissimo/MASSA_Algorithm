@@ -5,7 +5,7 @@ with open('README.md', 'r') as readme:
 
 setuptools.setup(
     name='MASSA Algorithm',
-    version='2.1.0',
+    version='2.2.0',
     description='MASSA Algorithm is a Python package to separate data sets of molecules into training and test sets, considering the diversity of structural, physicochemical and biological characteristics of these molecules.',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -16,7 +16,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
         entry_points={'console_scripts': [
             'MASSA_Algorithm = MASSA_Algorithm.MASSA:main']},
-    install_requires=['numpy < 2.0', 'rdkit', 'pandas', 'matplotlib >= 3.2',
+    install_requires=['numpy', 'rdkit', 'pandas', 'matplotlib >= 3.2',
                       'scipy >= 1.6', 'scikit-learn > 0.24', 'kmodes >= 0.10'],
     python_requires='>=3.8',
     keywords=['chemoinformatics', 'training', 'test', 'training-test',

@@ -20,7 +20,7 @@ def initial_print():
        ██░░░▓▓▓▓░░░░░░░▓▓▓▓░░░░░░░▓▓▓▓░░░░█
      ██░░░░▓▓▓▓▓▓░░░░░▓▓▓▓▓▓░░░░░▓▓▓▓▓▓░░░░█                                 MASSA Algorithm:
    ████░░░░░▓▓▓▓░░░░░░░▓▓▓▓░░░░░░░▓▓▓▓░░░░░█████          Molecular data set sampling  —  Training-Test Separation
-  █▓▓▓███░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░███▓▓▓█                            Version: v. 2.1.0
+  █▓▓▓███░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░███▓▓▓█                            Version: v. 2.2.0
  █▒▓▓▒▒▒████░░░░░░░░░░░░░░░░░░░░░░░░░░░░████▒▒▓▓▒█
  ██▓▒▒▒▓▓▓▓██████████████████████████████▓▓▓▒▒▒▒▓█                Developed by: Gabriel Corrêa Veríssimo
  ██▒▒▒▓▓▒▒▒▒▓▓▒▒▒▒▓▓▒▒▒▒▒▒▒▒▒▒▒▒▓▓▒▒▒▒▓▓▒▒▒▓▓▒▒██                           LICENSE: AGPL-3.0
@@ -31,4 +31,4 @@ def initial_print():
 
 
 def python_logo():
-    print("🍕 MASSA Algorithm v. 2.1.0: Molecular data set sampling")
+    print("🍕 MASSA Algorithm v. 2.2.0: Molecular data set sampling")
