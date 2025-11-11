@@ -15,5 +15,7 @@ MASSA Algorithm: A tool for separating data sets of molecules into training and 
 
    installation.md
    cmd_usage.md
+   py_usage.rst
    cite.md
    references.md
+    

@@ -3,12 +3,12 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="prev" title="Cite" href="cite.html">
-        <link rel="canonical" href="https://gcverissimo.github.io/MASSA_Algorithm/references.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Cite" href="cite.html"><link rel="prev" title="Command line usage" href="cmd_usage.html">
+        <link rel="canonical" href="https://gcverissimo.github.io/MASSA_Algorithm/py_usage.html">
         <link rel="prefetch" href="_static/logo-light.png" as="image">
 
     <link rel="shortcut icon" href="_static/favicon.ico"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>References - MASSA Algorithm v. 2.2.0 documentation</title>
+        <title>Parameters - MASSA Algorithm v. 2.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -199,11 +199,11 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cmd_usage.html">Command line usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="py_usage.html">Parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="py_usage.html#examples">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="py_usage.html#notes">Notes</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#examples">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#notes">Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cite.html">Cite</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
 </ul>
 
 </div>
@@ -224,7 +224,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="_sources/references.md.txt" title="View this page">
+  <a class="muted-link" href="_sources/py_usage.rst.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -242,9 +242,110 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="references">
-<h1>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h1>
-<p>[1]: DE VOS, N. J. kmodes categorical clustering library. <a class="reference external" href="https://github.com/nicodv/kmodes">https://github.com/nicodv/kmodes</a>. 2015-2021.</p>
+          <p><a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a>rst
+Python usage (py_massa)
+=======================</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">py_massa</span><span class="p">(</span>
+    <span class="n">file_input</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">working_directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">job_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;MASSAoutput.sdf&quot;</span><span class="p">,</span>
+    <span class="n">extension_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;svg&quot;</span><span class="p">,</span>
+    <span class="n">dendrogram_xfont_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">barplot_xfont_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span>
+    <span class="n">training_percent</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">,</span>
+    <span class="n">bioactivities_as_args</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">npcs</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">=</span> <span class="mf">0.85</span><span class="p">,</span>
+    <span class="n">svd_parameter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;full&quot;</span><span class="p">,</span>
+    <span class="n">linkage_method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;complete&quot;</span><span class="p">,</span>
+    <span class="n">flag_dendrogram</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">splitting_strategy</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;tt&quot;</span><span class="p">,</span>
+    <span class="n">drop_errors</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">large_library</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Run the MASSA Algorithm directly from Python.
+Equivalent to executing the command-line interface:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>MASSA_Algorithm<span class="w"> </span>-i<span class="w"> </span>&lt;input_file&gt;.sdf<span class="w"> </span>-o<span class="w"> </span>&lt;output_file&gt;.sdf
+</pre></div>
+</div>
+<section id="parameters">
+<h1>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h1>
+<dl>
+<dt><strong>file_input</strong><span class="classifier">str</span></dt><dd><p>Path to the input file. Accepted formats: <code class="docutils literal notranslate"><span class="pre">.sdf</span></code>, <code class="docutils literal notranslate"><span class="pre">.mol</span></code>, <code class="docutils literal notranslate"><span class="pre">.mol2</span></code>, <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code>, <code class="docutils literal notranslate"><span class="pre">.xls</span></code>, <code class="docutils literal notranslate"><span class="pre">.csv</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">.sdf</span></code> format is preferred.</p>
+<p><strong>Notes:</strong>
+- <code class="docutils literal notranslate"><span class="pre">.mol2</span></code> files are supported only if generated by <em>Discovery Studio Visualizer</em>.
+- For spreadsheet formats, MASSA searches for a column containing <em>smiles</em>.
+- Molecule names are extracted from columns: <em>Molecule name</em>, <em>Name</em>, <em>Molecule ChEMBL ID</em>, or <em>ID</em>.</p>
+</dd>
+<dt><strong>working_directory</strong><span class="classifier">str</span></dt><dd><p>Directory where output files will be saved.</p>
+</dd>
+<dt><strong>job_name</strong><span class="classifier">str, default=”MASSAoutput.sdf”</span></dt><dd><p>Output file name or path. Recommended to use <code class="docutils literal notranslate"><span class="pre">.sdf</span></code>.</p>
+</dd>
+<dt><strong>extension_type</strong><span class="classifier">str, default=”svg”</span></dt><dd><p>Image file extension. Suggested: <code class="docutils literal notranslate"><span class="pre">png</span></code> or <code class="docutils literal notranslate"><span class="pre">svg</span></code>.</p>
+</dd>
+<dt><strong>dendrogram_xfont_size</strong><span class="classifier">int, default=5</span></dt><dd><p>Font size for molecule labels in dendrogram plots.</p>
+</dd>
+<dt><strong>barplot_xfont_size</strong><span class="classifier">int, default=9</span></dt><dd><p>Font size for cluster labels in bar plots.</p>
+</dd>
+<dt><strong>training_percent</strong><span class="classifier">float, default=0.8</span></dt><dd><p>Proportion of molecules in the training set. Must be between 0 and 1.</p>
+</dd>
+<dt><strong>bioactivities_as_args</strong><span class="classifier">list of str or None, default=None</span></dt><dd><p>List of biological activities or other Y-properties used for dataset splitting.
+Example: <code class="docutils literal notranslate"><span class="pre">[&quot;pIC50&quot;,</span> <span class="pre">&quot;pMIC&quot;]</span></code>.</p>
+</dd>
+<dt><strong>npcs</strong><span class="classifier">float or int, default=0.85</span></dt><dd><p>Number of principal components for PCA reduction.
+- If between 0 and 1, represents variance fraction retained.
+- If ≥ 1, specifies exact number of PCs.</p>
+<p><strong>Notes:</strong>
+- If the number of PCs is an integer and equal to or greater than the number of physicochemical properties (7), the PCA step will be bypassed for this domain.
+- If biological activities &lt; 3, PCA is bypassed.</p>
+</dd>
+<dt><strong>svd_parameter</strong><span class="classifier">str, default=”full”</span></dt><dd><p>Solver for PCA. See <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html">sklearn.decomposition.PCA</a>.</p>
+</dd>
+<dt><strong>linkage_method</strong><span class="classifier">str, default=”complete”</span></dt><dd><p>Linkage criterion for hierarchical clustering.
+Options: <code class="docutils literal notranslate"><span class="pre">complete</span></code>, <code class="docutils literal notranslate"><span class="pre">single</span></code>, <code class="docutils literal notranslate"><span class="pre">ward</span></code>, <code class="docutils literal notranslate"><span class="pre">average</span></code>, <code class="docutils literal notranslate"><span class="pre">weighted</span></code>, <code class="docutils literal notranslate"><span class="pre">centroid</span></code>, <code class="docutils literal notranslate"><span class="pre">median</span></code>.
+See <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html">scipy.cluster.hierarchy.linkage</a>.</p>
+</dd>
+<dt><strong>flag_dendrogram</strong><span class="classifier">bool, default=True</span></dt><dd><p>Whether to generate dendrogram plots.</p>
+</dd>
+<dt><strong>splitting_strategy</strong><span class="classifier">str, default=”tt”</span></dt><dd><p>Strategy for data splitting.
+- <code class="docutils literal notranslate"><span class="pre">&quot;tt&quot;</span></code> – training/test sets.
+- <code class="docutils literal notranslate"><span class="pre">&quot;tt-val&quot;</span></code> – training/test/validation sets.</p>
+</dd>
+<dt><strong>drop_errors</strong><span class="classifier">bool, default=True</span></dt><dd><p>Ignore chemistry errors and log them, instead of aborting execution.</p>
+</dd>
+<dt><strong>large_library</strong><span class="classifier">str, default=”auto”</span></dt><dd><p>Switch between hierarchical clustering and MiniBatch-KMeans for large datasets.
+- <code class="docutils literal notranslate"><span class="pre">&quot;auto&quot;</span></code>: use KMeans if ≥ 10,000 molecules.
+- <code class="docutils literal notranslate"><span class="pre">&quot;true&quot;</span></code>: force KMeans.
+- <code class="docutils literal notranslate"><span class="pre">&quot;false&quot;</span></code>: force HCA.</p>
+</dd>
+</dl>
+</section>
+<section id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">massa</span><span class="w"> </span><span class="kn">import</span> <span class="n">py_massa</span>
+
+<span class="n">py_massa</span><span class="p">(</span>
+    <span class="n">file_input</span><span class="o">=</span><span class="s2">&quot;dataset.sdf&quot;</span><span class="p">,</span>
+    <span class="n">working_directory</span><span class="o">=</span><span class="s2">&quot;./results&quot;</span><span class="p">,</span>
+    <span class="n">job_name</span><span class="o">=</span><span class="s2">&quot;QSAR_split.sdf&quot;</span><span class="p">,</span>
+    <span class="n">bioactivities_as_args</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pIC50&quot;</span><span class="p">,</span> <span class="s2">&quot;pMIC&quot;</span><span class="p">],</span>
+    <span class="n">splitting_strategy</span><span class="o">=</span><span class="s2">&quot;tt-val&quot;</span><span class="p">,</span>
+    <span class="n">npcs</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+    <span class="n">linkage_method</span><span class="o">=</span><span class="s2">&quot;complete&quot;</span><span class="p">,</span>
+    <span class="n">flag_dendrogram</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="notes">
+<h1>Notes<a class="headerlink" href="#notes" title="Link to this heading">¶</a></h1>
+<ul class="simple">
+<li><p>Image files are saved to a subfolder in the same directory as the output file.</p></li>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">.sdf</span></code> input is strongly recommended to prevent errors.</p></li>
+<li><p>For large datasets (≥10,000 molecules), set <code class="docutils literal notranslate"><span class="pre">large_library=&quot;true&quot;</span></code>.</p></li>
+</ul>
 </section>
 
         </article>
@@ -252,15 +353,23 @@
       <footer>
         
         <div class="related-pages">
-          
-          <a class="prev-page" href="cite.html">
+          <a class="next-page" href="cite.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Cite</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="cmd_usage.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Cite</div>
+                <div class="title">Command line usage</div>
                 
               </div>
             </a>
