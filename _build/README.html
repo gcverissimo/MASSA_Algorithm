@@ -1,0 +1,512 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html">
+        <link rel="canonical" href="https://gcverissimo.github.io/MASSA_Algorithm/README.html">
+        <link rel="prefetch" href="_static/logo-light.png" as="image">
+
+    <link rel="shortcut icon" href="_static/favicon.ico"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+        <title>MASSA Algorithm - MASSA Algorithm v. 2.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">MASSA Algorithm v. 2.2.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="_static/logo-light.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">MASSA Algorithm v. 2.2.0 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/README.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="massa-algorithm">
+<h1>MASSA Algorithm<a class="headerlink" href="#massa-algorithm" title="Link to this heading">¶</a></h1>
+<p>MASSA Algorithm: A tool for separating data sets of molecules into training and test sets. Developed with the objective of preparing data sets for the generation of prediction models in cheminformatics.</p>
+<section id="version-1-0-0">
+<h2>Version 1.0.0<a class="headerlink" href="#version-1-0-0" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Version 1.0.0 includes a code refactoring and adds the ability to split data into training, test, and validation subsets.</p></li>
+</ul>
+</section>
+<section id="version-2-0-0">
+<h2>Version 2.0.0<a class="headerlink" href="#version-2-0-0" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Version 2.0.0 introduces algorithm changes to better handle large datasets. Specifically, for datasets with 10,000 molecules or more, Hierarchical Clustering Analysis (HCA) is automatically replaced by MiniBatch K-Means. This is the new default behavior, but it can be controlled using the flag -a / –large-datasets. Since dendrograms are generated from HCA, dendrogram plotting is disabled for large datasets. In such cases, the flag -f / –dendrogram-plot is automatically disabled, regardless of user input.</p></li>
+<li><p>This version introduces the ability to call the MASSA Algorithm from any Python script using MASSA_Algorithm.pyMASSA.py_massa(). However, instructions and documentation for doing so will be provided in future updates.</p></li>
+<li><p>Version 2.0.0 also addresses the “NaN/None values in y” error, which was caused by duplicate molecule names. In this version, molecules with identical names are detected and renamed by appending their original index as a suffix to ensure uniqueness.</p></li>
+<li><p>MASSA now preserves the input order of molecules in its output. However, molecules with chemical errors are skipped and excluded from the process.</p></li>
+</ul>
+</section>
+<section id="instalation">
+<h2>Instalation<a class="headerlink" href="#instalation" title="Link to this heading">¶</a></h2>
+<p>MASSA Algorithm can be installed using pip:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">MASSA_Algorithm</span>
+</pre></div>
+</div>
+<p>To upgrade to the latest version (recommended), also use pip:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">MASSA_Algorithm</span>
+</pre></div>
+</div>
+<p>Alternatively, you can build the latest development version from source:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">gcverissimo</span><span class="o">/</span><span class="n">MASSA_Algorithm</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">MASSA_Algorithm</span>
+<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+</div>
+<section id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>python: &gt;= 3.8;</p></li>
+<li><p>rdkit;</p></li>
+<li><p>numpy;</p></li>
+<li><p>pandas;</p></li>
+<li><p>matplotlib: &gt;= 3.2;</p></li>
+<li><p>scipy: &gt;= 1.6;</p></li>
+<li><p>scikit-learn: &gt; 0.24;</p></li>
+<li><p>kmodes:¹ &gt;= 0.10.</p></li>
+</ul>
+<p>NOTE: Also tested on: scikit-learn: 1.7.0, scipy: 1.16.1, numpy: 2.0.2, rdkit: 2025.03.5.</p>
+</section>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h2>
+<p>Once installed, the program can be run directly from the command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MASSA_Algorithm</span> <span class="o">-</span><span class="n">i</span> <span class="o">&lt;</span><span class="n">input_file</span><span class="o">&gt;.</span><span class="n">sdf</span> <span class="o">-</span><span class="n">o</span> <span class="o">&lt;</span><span class="n">output_file</span><span class="o">&gt;.</span><span class="n">sdf</span>
+</pre></div>
+</div>
+<p>Required arguments:</p>
+<ul class="simple">
+<li><p><strong>Input file</strong>: <code class="docutils literal notranslate"><span class="pre">-i</span></code> or <code class="docutils literal notranslate"><span class="pre">--input</span></code>.</p>
+<ul>
+<li><p>MASSA Algorithm accepts input files in the formats: .sdf, .mol, .mol2, .xlsx, .xls, and .csv. However, the .sdf format is preferred. Notes:</p>
+<ul>
+<li><p>.mol2 files have limitations in storing molecular properties and follow different saving patterns. Due to this, we only support .mol2 files that are generated by Discovery Studio Visualizer.</p></li>
+<li><p>For .xlsx, .xls, and .csv:</p>
+<ul>
+<li><p>MASSA will look for a column with smiles in the name and use it as the source of input molecules.</p></li>
+<li><p>MASSA will look for a column with one of the following names in the priority order: Molecule name, Name, Molecule ChEMBL ID, or ID. If none of these columns are found, it will use the molecule index.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Output file</strong>: <code class="docutils literal notranslate"><span class="pre">-o</span></code> or <code class="docutils literal notranslate"><span class="pre">--output</span></code>.</p>
+<ul>
+<li><p>Enter the output file name or file path. Image files will be saved to a folder within the same directory as the output file.</p></li>
+<li><p>It is highly recommended to use an .sdf file to avoid errors.</p></li>
+</ul>
+</li>
+</ul>
+<p>Optional arguments include:</p>
+<ul class="simple">
+<li><p><strong>Splitting strategy</strong>: <code class="docutils literal notranslate"><span class="pre">-y</span></code> or <code class="docutils literal notranslate"><span class="pre">--splitting_strategy</span></code>.</p>
+<ul>
+<li><p>Defines the splitting strategy, either into training and test sets or into training, test, and validation sets.</p></li>
+<li><p>Options = ‘tt’, ‘tt-val’.</p></li>
+<li><p>‘tt’, means splitting into training and test sets. ‘tt-val’, means splitting into training, test, and validation sets.</p></li>
+<li><p>Default = ‘tt’.</p></li>
+</ul>
+</li>
+<li><p><strong>Percentage of molecules in training set</strong>: <code class="docutils literal notranslate"><span class="pre">-p</span></code> or <code class="docutils literal notranslate"><span class="pre">--percentage_of_training</span></code>.</p>
+<ul>
+<li><p>Percentage of molecules in training set. Must be a number from 0 to 1.</p></li>
+<li><p>Default = 0.8.</p></li>
+</ul>
+</li>
+<li><p><strong>Number of biological activities for separation</strong>: <code class="docutils literal notranslate"><span class="pre">-b</span></code> or <code class="docutils literal notranslate"><span class="pre">--number_of_biological</span></code>.</p>
+<ul>
+<li><p>Number of biological activities that will be used to separate the set into training and test.</p></li>
+<li><p>Default = 1.</p></li>
+</ul>
+</li>
+<li><p><strong>Name of biological activities for separation</strong>: <code class="docutils literal notranslate"><span class="pre">-s</span></code> or <code class="docutils literal notranslate"><span class="pre">--the_biological_activities</span></code>.</p>
+<ul>
+<li><p>The biological activity(ies) or other y-property(ies) used for QSAR or machine learning modeling. The algorithm can handle one or more properties. Enter a list with the names of biological activities separated by commas and no spaces. These properties must be represented as either integers or floating-point numbers. If your dataset is represented in classes (e.g., active or inactive; soluble, partially soluble, or insoluble), you should represent them as integers (e.g., 0 or 1; 1, 2, or 3).</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">MASSA_Algorithm</span> <span class="pre">-i</span> <span class="pre">&lt;input_file&gt;.sdf</span> <span class="pre">-o</span> <span class="pre">&lt;output_file&gt;.sdf</span> <span class="pre">-s</span> <span class="pre">pIC50,pMIC</span></code>.</p></li>
+<li><p>Default = If not entered directly on the command line, it will be requested during algorithm execution.</p></li>
+</ul>
+</li>
+<li><p><strong>Number of principal components in PCA</strong>: <code class="docutils literal notranslate"><span class="pre">-n</span></code> or <code class="docutils literal notranslate"><span class="pre">--number_of_PCs</span></code>.</p>
+<ul>
+<li><p>Defines the number of principal components to reduce the dimensionality of variables related to biological, physicochemical and structural domains. If the value is a decimal between 0 and 1, the number of principal components is what explains for (<code class="docutils literal notranslate"><span class="pre">&lt;input</span> <span class="pre">number&gt;</span></code>* 100)% of the variance. If the value is greater than 1, the number of PCs will be exactly the input integer, but PAY ATTENTION:</p>
+<ol class="arabic simple">
+<li><p>If the number of PCs is an integer and equal to or greater than the number of physicochemical properties (7), the PCA step will be bypassed for this domain.</p></li>
+<li><p>The same for the biological domain.</p></li>
+<li><p>If the number of biological activities is less than 3, the PCA step will be bypassed for this domain.</p></li>
+</ol>
+</li>
+<li><p>Default = 0.85.</p></li>
+</ul>
+</li>
+<li><p><strong>SVD solver parameter for PCA</strong>: <code class="docutils literal notranslate"><span class="pre">-v</span></code> or <code class="docutils literal notranslate"><span class="pre">--svd_solver_for_PCA</span></code>.</p>
+<ul>
+<li><p>See the sklearn.decomposition.PCA topic on <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html">https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html</a> for more info.</p></li>
+<li><p>Default = full.</p></li>
+</ul>
+</li>
+<li><p><strong>HCA linkage method</strong>: <code class="docutils literal notranslate"><span class="pre">-l</span></code> or <code class="docutils literal notranslate"><span class="pre">--linkage_method</span></code>.</p>
+<ul>
+<li><p>The linkage criterion to use. The algorithm will merge the pairs of cluster that minimize this criterion.</p></li>
+<li><p>Options = complete, single, ward, average, weighted, centroid, median. For more info, see the scipy.cluster.hierarchy.linkage topic on <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html?highlight=linkage#scipy.cluster.hierarchy.linkage">https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html?highlight=linkage#scipy.cluster.hierarchy.linkage</a>.</p></li>
+<li><p>Default = complete.</p></li>
+</ul>
+</li>
+<li><p><strong>Extension of image files</strong>: <code class="docutils literal notranslate"><span class="pre">-t</span></code> or <code class="docutils literal notranslate"><span class="pre">--image_type</span></code>.</p>
+<ul>
+<li><p>Extension of the image files that will be generated. Suggested = png or svg.</p></li>
+<li><p>Default = png.</p></li>
+</ul>
+</li>
+<li><p><strong>Font size for X-axis of dendrograms</strong>: <code class="docutils literal notranslate"><span class="pre">-d</span></code> or <code class="docutils literal notranslate"><span class="pre">--dendrogram_Xfont_size</span></code>.</p>
+<ul>
+<li><p>Sets the font size on the x-axis of the dendrogram (molecule labels).</p></li>
+<li><p>Default = 5.</p></li>
+</ul>
+</li>
+<li><p><strong>Font size for X-axis of bar plots</strong>: <code class="docutils literal notranslate"><span class="pre">-x</span></code> or <code class="docutils literal notranslate"><span class="pre">--barplot_Xfont_size</span></code>.</p>
+<ul>
+<li><p>Sets the font size on the x-axis of the bar plot (cluster labels).</p></li>
+<li><p>Default = 12.</p></li>
+</ul>
+</li>
+<li><p><strong>Enable Dendrogram plot</strong>: <code class="docutils literal notranslate"><span class="pre">-f</span></code> or <code class="docutils literal notranslate"><span class="pre">--dendrogram_plot</span></code>.</p>
+<ul>
+<li><p>Defines whether or not dendrogram images will be generated.</p></li>
+<li><p>Options = true (dendrogram will be generated), false (dendrogram will not be generated).</p></li>
+<li><p>Default = true.</p></li>
+</ul>
+</li>
+<li><p><strong>Ignore Errors</strong>: <code class="docutils literal notranslate"><span class="pre">-e</span></code> or <code class="docutils literal notranslate"><span class="pre">--drop_errors</span></code>.</p>
+<ul>
+<li><p>Ignore chemistry errors, saving only molecules without any errors.</p></li>
+<li><p>Options = true (ignore molecule errors and log them in the log file), false (treat molecule errors as fatal and fail the execution).</p></li>
+<li><p>Default = true.</p></li>
+</ul>
+</li>
+<li><p><strong>Large Dataset</strong>: <code class="docutils literal notranslate"><span class="pre">-a</span></code> or <code class="docutils literal notranslate"><span class="pre">--large_dataset</span></code>.</p>
+<ul>
+<li><p>Switch the MASSA algorithm from HCA to MiniBatch-KMeans to handle large datasets.</p></li>
+<li><p>Options = auto (switches to KMeans if ≥ 10,000 molecules), false = use HCA (for smaller datasets), true = use KMeans (for large datasets).</p></li>
+<li><p>Default = auto.</p></li>
+</ul>
+</li>
+</ul>
+<section id="command-line-help">
+<h3>Command line help<a class="headerlink" href="#command-line-help" title="Link to this heading">¶</a></h3>
+<p>A full description of the arguments can also be viewed directly from the command line using the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MASSA_Algorithm</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MASSA_Algorithm</span> <span class="o">--</span><span class="n">help</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="cite">
+<h2>Cite<a class="headerlink" href="#cite" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>To ensure accurate citation, kindly include a reference to the MASSA article, accessible via the DOI:
+Veríssimo, G. C.; Panteleão, S. Q.; Fernandes, P. O.; Gertrudes, J. C.; Kronenberger, T.; Honorio, K. M.; Maltarollo; V. G. MASSA Algorithm: an automated rational sampling of training and test subsets for QSAR modeling. J. Comput. Aided Mol. Des. 2023, 37, 735–754. <a class="reference external" href="https://doi.org/10.1007/s10822-023-00536-y">https://doi.org/10.1007/s10822-023-00536-y</a>.</p></li>
+<li><p>Furthermore, please incorporate the program citation following the provided template:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@Misc</span><span class="p">{</span><span class="n">veríssimo2021</span><span class="p">,</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="p">{</span><span class="n">Gabriel</span> <span class="n">Corrêa</span> <span class="n">Veríssimo</span><span class="p">},</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="p">{</span><span class="n">MASSA</span> <span class="n">Algorithm</span><span class="p">:</span> <span class="n">Molecular</span> <span class="n">data</span> <span class="nb">set</span> <span class="n">sampling</span> <span class="k">for</span> <span class="n">training</span><span class="o">-</span><span class="n">test</span> <span class="n">separation</span><span class="p">},</span>
+    <span class="n">howpublished</span> <span class="o">=</span> <span class="p">{</span>\<span class="n">url</span><span class="p">{</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">gcverissimo</span><span class="o">/</span><span class="n">MASSA_Algorithm</span><span class="p">}},</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2021</span><span class="p">}</span>
+  <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
+<p>[1]: DE VOS, N. J. kmodes categorical clustering library. <a class="reference external" href="https://github.com/nicodv/kmodes">https://github.com/nicodv/kmodes</a>. 2015-2021.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025, Gabriel C. Veríssimo
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">MASSA Algorithm</a><ul>
+<li><a class="reference internal" href="#version-1-0-0">Version 1.0.0</a></li>
+<li><a class="reference internal" href="#version-2-0-0">Version 2.0.0</a></li>
+<li><a class="reference internal" href="#instalation">Instalation</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#usage">Usage</a><ul>
+<li><a class="reference internal" href="#command-line-help">Command line help</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cite">Cite</a></li>
+<li><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=32a54dfc"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>
