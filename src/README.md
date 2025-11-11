@@ -14,7 +14,7 @@ MASSA Algorithm: A tool for separating data sets of molecules into training and 
 
 - MASSA now preserves the input order of molecules in its output. However, molecules with chemical errors are skipped and excluded from the process. 
 
-## Instalation
+## Installation
 MASSA Algorithm can be installed using pip:
 ```
 pip install MASSA_Algorithm

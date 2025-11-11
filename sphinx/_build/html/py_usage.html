@@ -8,7 +8,7 @@
         <link rel="prefetch" href="_static/logo-light.png" as="image">
 
     <link rel="shortcut icon" href="_static/favicon.ico"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>Parameters - MASSA Algorithm v. 2.2.0 documentation</title>
+        <title>Python usage (py_massa) - MASSA Algorithm v. 2.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -174,7 +174,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -199,9 +199,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cmd_usage.html">Command line usage</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#examples">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#notes">Notes</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Python usage (py_massa)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cite.html">Cite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
 </ul>
@@ -237,14 +235,13 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <p><a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a>rst
-Python usage (py_massa)
-=======================</p>
+          <section id="python-usage-py-massa">
+<h1>Python usage (py_massa)<a class="headerlink" href="#python-usage-py-massa" title="Link to this heading">¶</a></h1>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">py_massa</span><span class="p">(</span>
     <span class="n">file_input</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">working_directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -270,7 +267,7 @@ Equivalent to executing the command-line interface:</p>
 </pre></div>
 </div>
 <section id="parameters">
-<h1>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h1>
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
 <dl>
 <dt><strong>file_input</strong><span class="classifier">str</span></dt><dd><p>Path to the input file. Accepted formats: <code class="docutils literal notranslate"><span class="pre">.sdf</span></code>, <code class="docutils literal notranslate"><span class="pre">.mol</span></code>, <code class="docutils literal notranslate"><span class="pre">.mol2</span></code>, <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code>, <code class="docutils literal notranslate"><span class="pre">.xls</span></code>, <code class="docutils literal notranslate"><span class="pre">.csv</span></code>.
 The <code class="docutils literal notranslate"><span class="pre">.sdf</span></code> format is preferred.</p>
@@ -323,8 +320,8 @@ See <a class="reference external" href="https://docs.scipy.org/doc/scipy/referen
 </dl>
 </section>
 <section id="examples">
-<h1>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h1>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">massa</span><span class="w"> </span><span class="kn">import</span> <span class="n">py_massa</span>
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">MASSA_Algorithm.pyMASSA</span><span class="w"> </span><span class="kn">import</span> <span class="n">py_massa</span>
 
 <span class="n">py_massa</span><span class="p">(</span>
     <span class="n">file_input</span><span class="o">=</span><span class="s2">&quot;dataset.sdf&quot;</span><span class="p">,</span>
@@ -340,12 +337,13 @@ See <a class="reference external" href="https://docs.scipy.org/doc/scipy/referen
 </div>
 </section>
 <section id="notes">
-<h1>Notes<a class="headerlink" href="#notes" title="Link to this heading">¶</a></h1>
+<h2>Notes<a class="headerlink" href="#notes" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Image files are saved to a subfolder in the same directory as the output file.</p></li>
 <li><p>Using <code class="docutils literal notranslate"><span class="pre">.sdf</span></code> input is strongly recommended to prevent errors.</p></li>
 <li><p>For large datasets (≥10,000 molecules), set <code class="docutils literal notranslate"><span class="pre">large_library=&quot;true&quot;</span></code>.</p></li>
 </ul>
+</section>
 </section>
 
         </article>
@@ -391,8 +389,29 @@ See <a class="reference external" href="https://docs.scipy.org/doc/scipy/referen
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Python usage (py_massa)</a><ul>
+<li><a class="reference internal" href="#parameters">Parameters</a></li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+<li><a class="reference internal" href="#notes">Notes</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

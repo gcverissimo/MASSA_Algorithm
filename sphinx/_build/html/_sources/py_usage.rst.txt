@@ -1,4 +1,3 @@
-```rst
 Python usage (py_massa)
 =======================
 
@@ -104,7 +103,7 @@ Examples
 
 .. code-block:: python
 
-    from massa import py_massa
+    from MASSA_Algorithm.pyMASSA import py_massa
 
     py_massa(
         file_input="dataset.sdf",
