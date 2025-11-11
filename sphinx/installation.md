@@ -1,4 +1,4 @@
-## Installation
+# Installation
 MASSA Algorithm can be installed using pip:
 ```
 pip install MASSA_Algorithm
@@ -13,7 +13,7 @@ git clone https://github.com/gcverissimo/MASSA_Algorithm.git
 cd MASSA_Algorithm
 python setup.py install
 ```
-### Requirements
+## Requirements
 * python: >= 3.8;
 * rdkit;
 * numpy;

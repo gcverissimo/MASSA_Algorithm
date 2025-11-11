@@ -14,3 +14,6 @@ MASSA Algorithm: A tool for separating data sets of molecules into training and 
    :caption: Contents:
 
    installation.md
+   cmd_usage.md
+   cite.md
+   references.md

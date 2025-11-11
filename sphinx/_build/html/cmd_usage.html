@@ -3,12 +3,12 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="prev" title="MASSA Algorithm documentation" href="index.html">
-        <link rel="canonical" href="https://gcverissimo.github.io/MASSA_Algorithm/installation.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Cite" href="cite.html"><link rel="prev" title="Installation" href="installation.html">
+        <link rel="canonical" href="https://gcverissimo.github.io/MASSA_Algorithm/cmd_usage.html">
         <link rel="prefetch" href="_static/logo-light.png" as="image">
 
     <link rel="shortcut icon" href="_static/favicon.ico"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>Installation - MASSA Algorithm v. 2.2.0 documentation</title>
+        <title>Command line usage - MASSA Algorithm v. 2.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -197,7 +197,10 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cite.html">Cite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
 </ul>
 
 </div>
@@ -218,7 +221,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="_sources/installation.md.txt" title="View this page">
+  <a class="muted-link" href="_sources/cmd_usage.md.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -236,35 +239,140 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h1>
-<p>MASSA Algorithm can be installed using pip:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">MASSA_Algorithm</span>
+          <section id="command-line-usage">
+<h1>Command line usage<a class="headerlink" href="#command-line-usage" title="Link to this heading">¶</a></h1>
+<p>Once installed, the program can be run directly from the command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MASSA_Algorithm</span> <span class="o">-</span><span class="n">i</span> <span class="o">&lt;</span><span class="n">input_file</span><span class="o">&gt;.</span><span class="n">sdf</span> <span class="o">-</span><span class="n">o</span> <span class="o">&lt;</span><span class="n">output_file</span><span class="o">&gt;.</span><span class="n">sdf</span>
 </pre></div>
 </div>
-<p>To upgrade to the latest version (recommended), also use pip:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">MASSA_Algorithm</span>
-</pre></div>
-</div>
-<p>Alternatively, you can build the latest development version from source:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">gcverissimo</span><span class="o">/</span><span class="n">MASSA_Algorithm</span><span class="o">.</span><span class="n">git</span>
-<span class="n">cd</span> <span class="n">MASSA_Algorithm</span>
-<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
-</pre></div>
-</div>
-<section id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">¶</a></h2>
+<p>Required arguments:</p>
 <ul class="simple">
-<li><p>python: &gt;= 3.8;</p></li>
-<li><p>rdkit;</p></li>
-<li><p>numpy;</p></li>
-<li><p>pandas;</p></li>
-<li><p>matplotlib: &gt;= 3.2;</p></li>
-<li><p>scipy: &gt;= 1.6;</p></li>
-<li><p>scikit-learn: &gt; 0.24;</p></li>
-<li><p>kmodes:¹ &gt;= 0.10.</p></li>
+<li><p><strong>Input file</strong>: <code class="docutils literal notranslate"><span class="pre">-i</span></code> or <code class="docutils literal notranslate"><span class="pre">--input</span></code>.</p>
+<ul>
+<li><p>MASSA Algorithm accepts input files in the formats: .sdf, .mol, .mol2, .xlsx, .xls, and .csv. However, the .sdf format is preferred. Notes:</p>
+<ul>
+<li><p>.mol2 files have limitations in storing molecular properties and follow different saving patterns. Due to this, we only support .mol2 files that are generated by Discovery Studio Visualizer.</p></li>
+<li><p>For .xlsx, .xls, and .csv:</p>
+<ul>
+<li><p>MASSA will look for a column with smiles in the name and use it as the source of input molecules.</p></li>
+<li><p>MASSA will look for a column with one of the following names in the priority order: Molecule name, Name, Molecule ChEMBL ID, or ID. If none of these columns are found, it will use the molecule index.</p></li>
 </ul>
-<p>NOTE: Also tested on: scikit-learn: 1.7.0, scipy: 1.16.1, numpy: 2.0.2, rdkit: 2025.03.5.</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Output file</strong>: <code class="docutils literal notranslate"><span class="pre">-o</span></code> or <code class="docutils literal notranslate"><span class="pre">--output</span></code>.</p>
+<ul>
+<li><p>Enter the output file name or file path. Image files will be saved to a folder within the same directory as the output file.</p></li>
+<li><p>It is highly recommended to use an .sdf file to avoid errors.</p></li>
+</ul>
+</li>
+</ul>
+<p>Optional arguments include:</p>
+<ul class="simple">
+<li><p><strong>Splitting strategy</strong>: <code class="docutils literal notranslate"><span class="pre">-y</span></code> or <code class="docutils literal notranslate"><span class="pre">--splitting_strategy</span></code>.</p>
+<ul>
+<li><p>Defines the splitting strategy, either into training and test sets or into training, test, and validation sets.</p></li>
+<li><p>Options = ‘tt’, ‘tt-val’.</p></li>
+<li><p>‘tt’, means splitting into training and test sets. ‘tt-val’, means splitting into training, test, and validation sets.</p></li>
+<li><p>Default = ‘tt’.</p></li>
+</ul>
+</li>
+<li><p><strong>Percentage of molecules in training set</strong>: <code class="docutils literal notranslate"><span class="pre">-p</span></code> or <code class="docutils literal notranslate"><span class="pre">--percentage_of_training</span></code>.</p>
+<ul>
+<li><p>Percentage of molecules in training set. Must be a number from 0 to 1.</p></li>
+<li><p>Default = 0.8.</p></li>
+</ul>
+</li>
+<li><p><strong>Number of biological activities for separation</strong>: <code class="docutils literal notranslate"><span class="pre">-b</span></code> or <code class="docutils literal notranslate"><span class="pre">--number_of_biological</span></code>.</p>
+<ul>
+<li><p>Number of biological activities that will be used to separate the set into training and test.</p></li>
+<li><p>Default = 1.</p></li>
+</ul>
+</li>
+<li><p><strong>Name of biological activities for separation</strong>: <code class="docutils literal notranslate"><span class="pre">-s</span></code> or <code class="docutils literal notranslate"><span class="pre">--the_biological_activities</span></code>.</p>
+<ul>
+<li><p>The biological activity(ies) or other y-property(ies) used for QSAR or machine learning modeling. The algorithm can handle one or more properties. Enter a list with the names of biological activities separated by commas and no spaces. These properties must be represented as either integers or floating-point numbers. If your dataset is represented in classes (e.g., active or inactive; soluble, partially soluble, or insoluble), you should represent them as integers (e.g., 0 or 1; 1, 2, or 3).</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">MASSA_Algorithm</span> <span class="pre">-i</span> <span class="pre">&lt;input_file&gt;.sdf</span> <span class="pre">-o</span> <span class="pre">&lt;output_file&gt;.sdf</span> <span class="pre">-s</span> <span class="pre">pIC50,pMIC</span></code>.</p></li>
+<li><p>Default = If not entered directly on the command line, it will be requested during algorithm execution.</p></li>
+</ul>
+</li>
+<li><p><strong>Number of principal components in PCA</strong>: <code class="docutils literal notranslate"><span class="pre">-n</span></code> or <code class="docutils literal notranslate"><span class="pre">--number_of_PCs</span></code>.</p>
+<ul>
+<li><p>Defines the number of principal components to reduce the dimensionality of variables related to biological, physicochemical and structural domains. If the value is a decimal between 0 and 1, the number of principal components is what explains for (<code class="docutils literal notranslate"><span class="pre">&lt;input</span> <span class="pre">number&gt;</span></code>* 100)% of the variance. If the value is greater than 1, the number of PCs will be exactly the input integer, but PAY ATTENTION:</p>
+<ol class="arabic simple">
+<li><p>If the number of PCs is an integer and equal to or greater than the number of physicochemical properties (7), the PCA step will be bypassed for this domain.</p></li>
+<li><p>The same for the biological domain.</p></li>
+<li><p>If the number of biological activities is less than 3, the PCA step will be bypassed for this domain.</p></li>
+</ol>
+</li>
+<li><p>Default = 0.85.</p></li>
+</ul>
+</li>
+<li><p><strong>SVD solver parameter for PCA</strong>: <code class="docutils literal notranslate"><span class="pre">-v</span></code> or <code class="docutils literal notranslate"><span class="pre">--svd_solver_for_PCA</span></code>.</p>
+<ul>
+<li><p>See the sklearn.decomposition.PCA topic on <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html">https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html</a> for more info.</p></li>
+<li><p>Default = full.</p></li>
+</ul>
+</li>
+<li><p><strong>HCA linkage method</strong>: <code class="docutils literal notranslate"><span class="pre">-l</span></code> or <code class="docutils literal notranslate"><span class="pre">--linkage_method</span></code>.</p>
+<ul>
+<li><p>The linkage criterion to use. The algorithm will merge the pairs of cluster that minimize this criterion.</p></li>
+<li><p>Options = complete, single, ward, average, weighted, centroid, median. For more info, see the scipy.cluster.hierarchy.linkage topic on <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html?highlight=linkage#scipy.cluster.hierarchy.linkage">https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html?highlight=linkage#scipy.cluster.hierarchy.linkage</a>.</p></li>
+<li><p>Default = complete.</p></li>
+</ul>
+</li>
+<li><p><strong>Extension of image files</strong>: <code class="docutils literal notranslate"><span class="pre">-t</span></code> or <code class="docutils literal notranslate"><span class="pre">--image_type</span></code>.</p>
+<ul>
+<li><p>Extension of the image files that will be generated. Suggested = png or svg.</p></li>
+<li><p>Default = png.</p></li>
+</ul>
+</li>
+<li><p><strong>Font size for X-axis of dendrograms</strong>: <code class="docutils literal notranslate"><span class="pre">-d</span></code> or <code class="docutils literal notranslate"><span class="pre">--dendrogram_Xfont_size</span></code>.</p>
+<ul>
+<li><p>Sets the font size on the x-axis of the dendrogram (molecule labels).</p></li>
+<li><p>Default = 5.</p></li>
+</ul>
+</li>
+<li><p><strong>Font size for X-axis of bar plots</strong>: <code class="docutils literal notranslate"><span class="pre">-x</span></code> or <code class="docutils literal notranslate"><span class="pre">--barplot_Xfont_size</span></code>.</p>
+<ul>
+<li><p>Sets the font size on the x-axis of the bar plot (cluster labels).</p></li>
+<li><p>Default = 12.</p></li>
+</ul>
+</li>
+<li><p><strong>Enable Dendrogram plot</strong>: <code class="docutils literal notranslate"><span class="pre">-f</span></code> or <code class="docutils literal notranslate"><span class="pre">--dendrogram_plot</span></code>.</p>
+<ul>
+<li><p>Defines whether or not dendrogram images will be generated.</p></li>
+<li><p>Options = true (dendrogram will be generated), false (dendrogram will not be generated).</p></li>
+<li><p>Default = true.</p></li>
+</ul>
+</li>
+<li><p><strong>Ignore Errors</strong>: <code class="docutils literal notranslate"><span class="pre">-e</span></code> or <code class="docutils literal notranslate"><span class="pre">--drop_errors</span></code>.</p>
+<ul>
+<li><p>Ignore chemistry errors, saving only molecules without any errors.</p></li>
+<li><p>Options = true (ignore molecule errors and log them in the log file), false (treat molecule errors as fatal and fail the execution).</p></li>
+<li><p>Default = true.</p></li>
+</ul>
+</li>
+<li><p><strong>Large Dataset</strong>: <code class="docutils literal notranslate"><span class="pre">-a</span></code> or <code class="docutils literal notranslate"><span class="pre">--large_dataset</span></code>.</p>
+<ul>
+<li><p>Switch the MASSA algorithm from HCA to MiniBatch-KMeans to handle large datasets.</p></li>
+<li><p>Options = auto (switches to KMeans if ≥ 10,000 molecules), false = use HCA (for smaller datasets), true = use KMeans (for large datasets).</p></li>
+<li><p>Default = auto.</p></li>
+</ul>
+</li>
+</ul>
+<section id="command-line-help">
+<h2>Command line help<a class="headerlink" href="#command-line-help" title="Link to this heading">¶</a></h2>
+<p>A full description of the arguments can also be viewed directly from the command line using the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MASSA_Algorithm</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MASSA_Algorithm</span> <span class="o">--</span><span class="n">help</span>
+</pre></div>
+</div>
 </section>
 </section>
 
@@ -273,15 +381,23 @@
       <footer>
         
         <div class="related-pages">
-          
-          <a class="prev-page" href="index.html">
+          <a class="next-page" href="cite.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Cite</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="installation.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Home</div>
+                <div class="title">Installation</div>
                 
               </div>
             </a>
@@ -315,8 +431,8 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Installation</a><ul>
-<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#">Command line usage</a><ul>
+<li><a class="reference internal" href="#command-line-help">Command line help</a></li>
 </ul>
 </li>
 </ul>
