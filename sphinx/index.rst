@@ -10,11 +10,10 @@ MASSA Algorithm: A tool for separating data sets of molecules into training and 
 
 
 Table of Contents
------------------
+=================
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
    installation.md
    cmd_usage.md
