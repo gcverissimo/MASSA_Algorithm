@@ -143,6 +143,30 @@ def read_CSV_smiles(file, write_log, drop_errors):
     return mols_sanitized
 
 
+def read_SMI_smiles(file, write_log, drop_errors):
+    # Not designed for MASSA execution. 
+    # It will not read the "Activity" column if the .smi file doesn't have headers.
+    first_row = pd.read_csv(file, sep="\t", nrows=1, header=None)
+    first_value = str(first_row.iloc[0, 0])
+    has_header = AllChem.MolFromSmiles(first_value) is None
+
+    if has_header:
+        df = pd.read_csv(file, sep="\t", header=0)
+    else:
+        df = pd.read_csv(file, sep="\t", header=None)
+        df = df.iloc[:, :2] # Keep only the first two columns
+        df.columns = ["SMILES", "Name"]
+
+    mols_sanitized = read_df_smiles(df, write_log, drop_errors)
+    return mols_sanitized
+
+def read_SMI_smiles(file, write_log, drop_errors):
+    df_supplier = pd.read_csv(file, sep="\t", header=None)
+    df_supplier.columns = ["SMILES", "Name"]
+    mols_sanitized = read_df_smiles(df_supplier, write_log, drop_errors)
+    return mols_sanitized
+
+
 def read_SDF(file, write_log, drop_errors):
     """Reads an SDF file and returns a sanitized molecule supplier.
 
@@ -283,6 +307,8 @@ def read_molecules(file, write_log, drop_errors):
         molecules = read_EXCEL_smiles(file, write_log, drop_errors)
     elif file.endswith(".csv"):
         molecules = read_CSV_smiles(file, write_log, drop_errors)
+    elif file.endswith(".smi"):
+        molecules = read_SMI_smiles(file, write_log, drop_errors)
     return molecules
 
 
