@@ -27,8 +27,8 @@ def name_extraction(file):
             else:
                 duplicates[name] = [[idx, mol]]
 
-        final_names = []
         final_names_dict = {}
+        idx_names = {}
         for k, v in duplicates.items():
             name = k
             replicates = v
@@ -39,7 +39,7 @@ def name_extraction(file):
                     final_key = f"{name}_idx-_{index}"
                     molecule.SetProp("_Name", final_key)
                     final_names_dict[final_key] = molecule
-                    final_names.append(final_key)
+                    idx_names[index] = final_key
             else:
                 for r in replicates:
                     index = r[0]
@@ -47,8 +47,15 @@ def name_extraction(file):
                     final_key = name
                     molecule.SetProp("_Name", final_key)
                     final_names_dict[final_key] = molecule
-                    final_names.append(final_key)
-        dataframe = pd.DataFrame({'molecules': pd.Series(final_names_dict)})
+                    idx_names[index] = final_key
+        f_names = [None] * (max(idx_names) + 1)
+        for i_idx, i_name in idx_names.items():
+            f_names[i_idx] = i_name
+        final_names = f_names
+        dataframe = pd.DataFrame(
+            {'molecules': [final_names_dict[name] for name in final_names]},
+            index=final_names
+            )
     return final_names, dataframe
 
 
