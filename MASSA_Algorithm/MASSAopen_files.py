@@ -154,16 +154,11 @@ def read_SMI_smiles(file, write_log, drop_errors):
         df = pd.read_csv(file, sep="\t", header=0)
     else:
         df = pd.read_csv(file, sep="\t", header=None)
-        df = df.iloc[:, :2] # Keep only the first two columns
-        df.columns = ["SMILES", "Name"]
+        df.columns = ["SMILES", "Name"] + [
+            f"Column_{i}" for i in range(3, df.shape[1] + 1)
+        ]
 
     mols_sanitized = read_df_smiles(df, write_log, drop_errors)
-    return mols_sanitized
-
-def read_SMI_smiles(file, write_log, drop_errors):
-    df_supplier = pd.read_csv(file, sep="\t", header=None)
-    df_supplier.columns = ["SMILES", "Name"]
-    mols_sanitized = read_df_smiles(df_supplier, write_log, drop_errors)
     return mols_sanitized
 
 
