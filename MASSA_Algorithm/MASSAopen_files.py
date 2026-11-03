@@ -304,6 +304,8 @@ def read_molecules(file, write_log, drop_errors):
         molecules = read_CSV_smiles(file, write_log, drop_errors)
     elif file.endswith(".smi"):
         molecules = read_SMI_smiles(file, write_log, drop_errors)
+    else:
+        raise ValueError(f"Unsupported file format: {file}")
     return molecules
 
 
